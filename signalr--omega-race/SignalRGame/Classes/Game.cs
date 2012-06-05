@@ -8,6 +8,13 @@ namespace SignalRGame.Classes.GameElements
 {
     public class Game
     {
+        private readonly static Arena _arena = new Arena();
+        private static Game _game;
+
+        private bool _stop;
+        private readonly List<Ship> _ships;
+        private readonly List<ClientHandler> _handlers;
+
         public static void StartGame()
         {
             _game = new Game();
@@ -44,8 +51,7 @@ namespace SignalRGame.Classes.GameElements
             get { return _arena; }
         }
 
-        private readonly static Arena _arena = new Arena();
-        private static Game _game;
+
 
         private Game()
         {
@@ -78,14 +84,13 @@ namespace SignalRGame.Classes.GameElements
         {
             while (!_stop)
             {
-                var blasts = new List<Missile>();
                 foreach (var ship in _ships)
                 {
                     MoveShip(ship);
                 }
                 foreach( var handler in _handlers)
                 {
-                    handler.Draw(_ships, blasts, _arena);
+                    handler.Draw(_ships, _arena);
                 }
                 Thread.Sleep(30);
             }
@@ -94,12 +99,8 @@ namespace SignalRGame.Classes.GameElements
         private void MoveShip(Ship ship)
         {
             ship.Move();
-            ship.MoveMissiles();
-            ship.Decelerate();
         }
 
-        private bool _stop = false;
-        private List<Ship> _ships;
-        private List<ClientHandler> _handlers;
+
     }
 }

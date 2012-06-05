@@ -36,21 +36,6 @@ namespace SignalRGame.Classes.Connections
                         ship.MovingDown = keyDown;
                         break;
                     }
-                case 68:
-                    {
-                        ship.SpinningRight = keyDown;
-                        break;
-                    }
-                case 65:
-                    {
-                        ship.SpinningLeft = keyDown;
-                        break;
-                    }
-                case 83:
-                    {
-                        ship.FireMissile();
-                        break;
-                    }
             }
 
             return base.OnReceivedAsync(clientId, data);

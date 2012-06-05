@@ -17,13 +17,6 @@ namespace SignalRGame.Classes.Connections
             return Connection.Broadcast(ship);
         }
 
-
-        private readonly string[] _colours = new string[]
-                                            {
-                                                "red",
-                                                "white",
-                                                "blue",
-                                                "yellow"
-                                            };
+        private readonly string[] _colours = new [] { "red", "white", "blue", "yellow" };
     }
 }
