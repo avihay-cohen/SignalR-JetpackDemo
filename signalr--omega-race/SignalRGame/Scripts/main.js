@@ -12,7 +12,7 @@
         var playerName = data.Name;
         if (isThisPlayer(playerName)) {
             startProcessingKeyPresses();
-            hideJoinBox();
+            $('#login').hide();
         }
         displayWelcomeMessage(playerName, data.Colour);
     });
@@ -37,10 +37,6 @@
         keyPressConnection.start();
     }
 
-    function hideJoinBox() {
-        $('#login').hide();
-    }
-
     function displayWelcomeMessage(playerName, shipColour) {
         var message = 'Welcome to the game, ' + playerName + '.';
         var notificationArea = $('#notifications');
@@ -52,16 +48,6 @@
 
     function isThisPlayer(playerName) {
         return (playerName == currentPlayerName);
-    }
-
-    function join() {
-        var playerName = $('#playername').val();
-        currentPlayerName = playerName;
-        tellServerPlayerJoined(playerName);
-    }
-
-    function tellServerPlayerJoined(playerName) {
-        playerConnection.send(playerName);
     }
 
     var ships = [];
@@ -96,7 +82,6 @@
         }
     }
 
-
     function drawArena() {
         context.save();
         context.beginPath();
@@ -126,16 +111,6 @@
     function drawShips() {
         for (var i = 0; i < ships.length; i++)
             drawShip(ships[i]);
-    }
-
-    function keyDown(e) {
-        var msg = 'd:' + currentPlayerName + ':' + e.keyCode;
-        keyPressConnection.send(msg);
-    }
-
-    function keyUp(e) {
-        var msg = 'u:' + currentPlayerName + ':' + e.keyCode;
-        keyPressConnection.send(msg);
     }
 
     //this explains where and how to draw your laser missile.  For every laser you have it will add the missile speed to  the last lasers last x & y coordinate, and it will position the x & yat an angle that the ship was in when you fired
@@ -175,17 +150,22 @@
 
     // Wire up the key presses etc
     $(document).keydown(function (e) {
-        if (inGame)
-            keyDown(e);
+        if (inGame) {
+            var msg = 'd:' + currentPlayerName + ':' + e.keyCode;
+            keyPressConnection.send(msg);
+        }
     });
 
     $(document).keyup(function (e) {
-        if (inGame)
-            keyUp(e);
+        if (inGame) {
+            var msg = 'u:' + currentPlayerName + ':' + e.keyCode;
+            keyPressConnection.send(msg);
+        }
     });
 
     $('#join').click(function () {
-        join();
+        var playerName = $('#playername').val();
+        currentPlayerName = playerName;
+        playerConnection.send(playerName);
     });
-
 });
