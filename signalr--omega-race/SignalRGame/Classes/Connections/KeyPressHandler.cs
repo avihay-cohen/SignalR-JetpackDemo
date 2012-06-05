@@ -17,13 +17,21 @@ namespace SignalRGame.Classes.Connections
             switch (key)
             {
                 case 39:
-                    {
+                    {                        
                         ship.MovingRight = keyDown;
+                        if(keyDown)
+                        {
+                            ship.Dir = 1;
+                        }
                         break;
                     }
                 case 37:
                     {
                         ship.MovingLeft = keyDown;
+                        if (keyDown)
+                        {
+                            ship.Dir = -1;
+                        }
                         break;
                     }
                 case 38:

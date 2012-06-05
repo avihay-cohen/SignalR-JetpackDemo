@@ -3,6 +3,9 @@
     var imageObj = new Image();
     imageObj.src = "../Images/jetpack.png";
 
+    var imageObjRight = new Image();
+    imageObjRight.src = "../Images/jetpackRight.png";
+
     // Connection used to deal with players joining - either through this instance or other instances (therefore a two way connection)
     var playerConnection = $.connection('playerconnection');
     playerConnection.start();
@@ -66,7 +69,12 @@
 
     function drawShip(ship) {
         context.save();
-        context.drawImage(imageObj, ship.X - 10, ship.Y - 20);
+        if(ship.Dir === -1) {
+            context.drawImage(imageObj, ship.X - 10, ship.Y - 20);    
+        }
+        if (ship.Dir === 1) {
+            context.drawImage(imageObjRight, ship.X - 10, ship.Y - 20);
+        }        
         context.fillStyle = ship.Colour;
         context.font = "bold 16px Arial";
         context.fillText(ship.Name, ship.X - 15, ship.Y - 25);

@@ -20,6 +20,12 @@ namespace SignalRGame.Classes.GameElements
         public bool MovingRight { get; set; }
         public bool MovingUp { get; set; }
         public bool MovingDown { get; set; }
+        public int Dir { get; set; }
+
+        public Ship()
+        {
+            Dir = 1;
+        }
 
         public void Move()
         {
