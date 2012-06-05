@@ -1,5 +1,8 @@
 ﻿$(document).ready(function () {
 
+    var imageObj = new Image();
+    imageObj.src = "../Images/jetpack.png";
+
     // Connection used to deal with players joining - either through this instance or other instances
     // (therefore a two way connection)
     var playerConnection = $.connection('playerconnection');
@@ -24,7 +27,6 @@
 
     gameConnection.received(function (data) {
         ships = data.Ships;
-        enemies = data.Enemies;
         explodedShips = data.Blasts;
         arena = data.Arena;
         refreshScreen();
@@ -112,24 +114,11 @@
 
     function drawShip(ship) {
         context.save();
-        context.strokeStyle = ship.Colour;
-        context.translate(ship.X, ship.Y);
-        context.rotate(ship.Angle * Math.PI / 180);
-        context.beginPath();
-        context.moveTo(shipsize * -.3, shipsize * .2);
-        context.lineTo(shipsize * -.4, shipsize * -.1);
-        context.lineTo(shipsize * .1, shipsize * .4);
-        context.lineTo(0, shipsize * .5);
-        context.lineTo(shipsize * -.1, shipsize * .4);
-        context.lineTo(shipsize * .4, shipsize * -.1);
-        context.lineTo(shipsize * .3, shipsize * .2);
-        context.moveTo(shipsize * -.4, shipsize * -.1);
-        context.lineTo(shipsize * .3, shipsize * -.5);
-        context.lineTo(0, shipsize * .3);
-        context.lineTo(shipsize * -.3, shipsize * -.5);
-        context.lineTo(shipsize * .4, shipsize * -.1);
-        context.stroke();
-        context.restore();
+        context.drawImage(imageObj, ship.X - 10, ship.Y - 20);
+
+        context.fillStyle = ship.Colour;
+        context.font = "bold 16px Arial";
+        context.fillText(ship.Name, ship.X - 15, ship.Y - 25);
 
         drawLasers(ship);
     }
