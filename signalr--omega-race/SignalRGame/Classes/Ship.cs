@@ -4,6 +4,12 @@ namespace SignalRGame.Classes.GameElements
 {
     public class Ship
     {
+        private const int SpeedIncrease = 1;
+        private const double FrictionFactor = .97;
+        private const int MaxSpeed = 8;
+        private const double MinSpeed = .5;
+        private const int BounceBackPixels = 1;
+
         public string Name { get; set; }
         public string Colour { get; set; }
         public double X { get; set; }
@@ -17,45 +23,52 @@ namespace SignalRGame.Classes.GameElements
 
         public void Move()
         {
-            if (MovingLeft) XSpeed--;
-            if (MovingRight) XSpeed++;
-            if (MovingUp) YSpeed--;
-            if (MovingDown) YSpeed++;
+            if (MovingLeft) XSpeed -= SpeedIncrease;
+            if (MovingRight) XSpeed += SpeedIncrease;
+            if (MovingUp) YSpeed -= SpeedIncrease;
+            if (MovingDown) YSpeed += SpeedIncrease;
 
             ConstrainToTrack();
 
-            X += (XSpeed*1.1);
-            Y += (YSpeed*1.1);
+            // Apply speeds
+            X += XSpeed;
+            Y += YSpeed;
 
             // Slow down
-            XSpeed *= .97;
-            YSpeed *= .97;
+            XSpeed *= FrictionFactor;
+            YSpeed *= FrictionFactor;
+
+            // Limit speed to maximum
+            if (XSpeed < -MaxSpeed) XSpeed = -MaxSpeed;
+            if (YSpeed < -MaxSpeed) YSpeed = -MaxSpeed;
+            if (XSpeed > MaxSpeed) XSpeed = MaxSpeed;
+            if (YSpeed > MaxSpeed) YSpeed = MaxSpeed;
 
             // Set speed to 0 if very close
-            if (Math.Abs(XSpeed) < 0.5) XSpeed = 0;
-            if (Math.Abs(YSpeed) < 0.5) YSpeed = 0;
+            if (Math.Abs(XSpeed) < MinSpeed) XSpeed = 0;
+            if (Math.Abs(YSpeed) < MinSpeed) YSpeed = 0;
         }
 
         private void ConstrainToTrack()
         {
             if (X <= Game.Arena.Boundary.Left)
             {
-                X = Game.Arena.Boundary.Left + 1;
+                X = Game.Arena.Boundary.Left + BounceBackPixels;
                 XSpeed *= -1;
             }
             if (X >= Game.Arena.Boundary.Right)
             {
-                X = Game.Arena.Boundary.Right - 1;
+                X = Game.Arena.Boundary.Right - BounceBackPixels;
                 XSpeed *= -1;
             }
             if (Y >= Game.Arena.Boundary.Bottom)
             {
-                Y = Game.Arena.Boundary.Bottom - 1;
+                Y = Game.Arena.Boundary.Bottom - BounceBackPixels;
                 YSpeed *= -1;
             }
             if (Y <= Game.Arena.Boundary.Top)
             {
-                Y = Game.Arena.Boundary.Top + 1;
+                Y = Game.Arena.Boundary.Top + BounceBackPixels;
                 YSpeed *= -1;
             }
         }
