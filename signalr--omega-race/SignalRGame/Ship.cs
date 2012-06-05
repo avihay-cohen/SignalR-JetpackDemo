@@ -84,30 +84,7 @@ namespace SignalRGame
                 }
             }
         }
-
-        public List<Missile> HitTest(List<Enemy> enemies)
-        {
-            var hits = new List<Missile>();
-            for (var missileIndex = _missiles.Count - 1; missileIndex >= 0; missileIndex--)
-            {
-                bool hit = false;
-                var missile = _missiles[missileIndex];
-                for (var enemyIndex = 0; enemyIndex < enemies.Count; enemyIndex++)
-                {
-                    var enemy = enemies[enemyIndex];
-                    if (missile.X.IsBetween( enemy.X - 13, enemy.X + 13) && missile.Y.IsBetween(enemy.Y -13, enemy.Y + 13) )
-                    {
-                        hit = true;
-                        hits.Add(new Missile() {Angle = 10, X = enemy.X, Y = enemy.Y});
-                        enemies.Remove(enemy);
-                    }
-                }
-                if (hit)
-                    _missiles.Remove(missile);
-            }
-            return hits;
-        }
-
+      
         public Missile[] Missiles
         {
             get { return _missiles.ToArray(); }

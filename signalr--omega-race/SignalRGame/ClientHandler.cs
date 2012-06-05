@@ -14,12 +14,12 @@ namespace SignalRGame
             return base.OnConnectedAsync(context, clientId);
         }
 
-        internal void Draw(List<Ship> ships, List<Enemy> enemies, List<Missile> blasts, Arena arena)
+        internal void Draw(List<Ship> ships, List<Missile> blasts, Arena arena)
         {
             Connection.Broadcast(new DrawInfo
                                      {
                                          Ships = ships.ToArray(),
-                                         Enemies = enemies.ToArray(),
+  
                                          Blasts = blasts.ToArray(),
                                          Arena = arena
                                      });
@@ -29,7 +29,6 @@ namespace SignalRGame
     public class DrawInfo
     {
         public Ship[] Ships;
-        public Enemy[] Enemies;
         public Missile[] Blasts;
         public Arena Arena;
     }

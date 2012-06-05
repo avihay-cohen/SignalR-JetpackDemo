@@ -72,7 +72,6 @@
                 }
 
                 var ships = [];
-                var enemies = [];
                 var currentPlayerName = '';
                 var inGame = false;
                 var context;
@@ -80,35 +79,7 @@
                 var arena;
                 var explodedShips = [];
                 var bplus = 6; //used to set the varied starburst effect of the ship and enemy blast
-
-                //this draws the two squares of the enemyship that rotate
-                function drawEnemy(enemy) {
-                    context.save();
-                    context.translate(enemy.X, enemy.Y);
-                    context.lineWidth = 1;
-                    context.strokeStyle = enemy.Colour;
-                    context.strokeRect(-5, -5, 10, 10);
-                    context.beginPath();
-                    context.arc(0, 0, 17, 0, Math.PI * 2, true);
-                    context.closePath();
-                    context.stroke();
-                    context.lineWidth = 1;
-                    context.translate(0, 0);
-                    for (var b = 0; b < 2; b++) {
-                        context.translate(0, 0);
-                        context.rotate(150);
-                        context.strokeRect(-13, -13, 26, 26);
-                    }
-                    context.restore();
-                }
-
-                function drawEnemies() {
-                    for (var i = 0; i < enemies.length; i++) {
-                        var enemy = enemies[i];
-                        drawEnemy(enemy);
-                    }
-                }
-
+             
                 function drawExplodedShips() {
                     for (var i = 0; i < explodedShips.length; i++) {
                         var explodedShip = explodedShips[i];
@@ -218,7 +189,6 @@
                     context = game_area.getContext('2d');
                     context.clearRect(0, 0, arena.Width, arena.Height);
                     drawArena();
-                    drawEnemies();
                     drawShips();
                     drawExplodedShips();
                 }

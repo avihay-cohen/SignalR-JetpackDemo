@@ -52,8 +52,7 @@ namespace SignalRGame
         {
             _stop = false;
             _handlers = new List<ClientHandler>();
-            _ships =  new List<Ship>();
-            _enemies = new List<Enemy>();
+            _ships =  new List<Ship>();            
         }
 
         public void Stop()
@@ -78,37 +77,19 @@ namespace SignalRGame
 
         public void Main()
         {
-            CreateEnemies();
             while (!_stop)
             {
-                MoveEnemies();
                 var blasts = new List<Missile>();
                 foreach (var ship in _ships)
                 {
                     MoveShip(ship);
-                    blasts = ship.HitTest(_enemies);
                 }
                 foreach( var handler in _handlers)
                 {
-                    handler.Draw(_ships, _enemies, blasts, _arena);
+                    handler.Draw(_ships, blasts, _arena);
                 }
                 Thread.Sleep(30);
             }
-        }
-
-        private void CreateEnemies()
-        {
-            Random rnd = new Random();
-            const int enemyX = 200;
-            const int enemyY = 320;
-            const int enemyCount = 6;
-            for (var i = 0; i < enemyCount; i++) {
-                var y = (Math.Round((double)rnd.Next(0,180)));
-                var x = (Math.Round((double)rnd.Next(0,600)));
-                var margin = (Math.Round((double) rnd.Next(10,190)));
-                _enemies.Add(new Enemy() { X = x + enemyX, Y = y + enemyY, SpeedX = -1, SpeedY = 0, Margin = margin });
-            }
-
         }
 
         private void MoveShip(Ship ship)
@@ -118,18 +99,8 @@ namespace SignalRGame
             ship.Decelerate();
         }
 
-        private void MoveEnemies()
-        {
-            foreach ( var enemy in _enemies)
-            {
-                enemy.Move();
-            }
-        }
-        
-
         private bool _stop = false;
         private List<Ship> _ships;
-        private List<Enemy> _enemies;
         private List<ClientHandler> _handlers;
     }
 }
