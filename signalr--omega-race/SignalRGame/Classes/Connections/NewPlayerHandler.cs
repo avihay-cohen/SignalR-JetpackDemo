@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using SignalR;
+﻿using SignalR;
+using SignalRGame.Classes.GameElements;
 
-namespace SignalRGame
+namespace SignalRGame.Classes.Connections
 {
     public class NewPlayerHandler : PersistentConnection
     {

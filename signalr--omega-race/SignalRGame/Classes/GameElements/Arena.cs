@@ -1,6 +1,6 @@
 ﻿using System.Drawing;
 
-namespace SignalRGame
+namespace SignalRGame.Classes.GameElements
 {
     public class Arena
     {        

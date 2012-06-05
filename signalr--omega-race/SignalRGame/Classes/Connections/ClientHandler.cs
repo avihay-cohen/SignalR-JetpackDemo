@@ -1,10 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Web;
 using SignalR;
+using SignalRGame.Classes.GameElements;
 
-namespace SignalRGame
+namespace SignalRGame.Classes.Connections
 {
     public class ClientHandler : PersistentConnection
     {
@@ -19,7 +18,6 @@ namespace SignalRGame
             Connection.Broadcast(new DrawInfo
                                      {
                                          Ships = ships.ToArray(),
-  
                                          Blasts = blasts.ToArray(),
                                          Arena = arena
                                      });

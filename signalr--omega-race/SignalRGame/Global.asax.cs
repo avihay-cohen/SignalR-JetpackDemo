@@ -6,6 +6,8 @@ using System.Web.Routing;
 using System.Web.Security;
 using System.Web.SessionState;
 using SignalR.Routing;
+using SignalRGame.Classes.Connections;
+using SignalRGame.Classes.GameElements;
 
 namespace SignalRGame
 {

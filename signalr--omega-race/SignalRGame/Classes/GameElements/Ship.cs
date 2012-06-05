@@ -1,12 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
-using System.Web;
 
-namespace SignalRGame
+namespace SignalRGame.Classes.GameElements
 {
-    public class Ship : GameElement
+    public class Ship : BaseGameElement
     {
         public string Name { get; set; }
         public double XSpeed { get; set; }

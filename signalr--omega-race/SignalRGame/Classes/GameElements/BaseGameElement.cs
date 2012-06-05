@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-
-namespace SignalRGame
+﻿namespace SignalRGame.Classes.GameElements
 {
-    public class GameElement
+    public abstract class BaseGameElement
     {
         public double X { get; set; }
         public double Y { get; set; }
