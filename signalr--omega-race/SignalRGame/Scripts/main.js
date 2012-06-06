@@ -6,36 +6,25 @@
     var imageObjRight = new Image();
     imageObjRight.src = "../Images/jetpackRight.png";
 
-    // Connection used to deal with players joining - either through this instance or other instances (therefore a two way connection)
-    var playerConnection = $.connection('playerconnection');
-    playerConnection.start();
+    // Proxy created on the fly
+    var hub = $.connection.gamehub;
 
-    playerConnection.received(function (data) {
+    hub.newPlayer = function (data) {
         var playerName = data.Name;
         if (isThisPlayer(playerName)) {
-            startProcessingKeyPresses();
+            inGame = true;
             $('#login').hide();
         }
         displayWelcomeMessage(playerName, data.Colour);
-    });
+    };
 
-    // Send only connection used to send key presses to the game engine
-    var keyPressConnection = $.connection('keypressconnection');
-
-    // Connection to the game engine this is effectively a receive only connection, used by the engine to tell us to perform some ui action
-    var gameConnection = $.connection('gameconnection');
-    gameConnection.start();
-
-    gameConnection.received(function (data) {
+    hub.draw = function (data) {
         ships = data.Ships;
         arena = data.Arena;
         refreshScreen();
-    });
+    };
 
-    function startProcessingKeyPresses() {
-        inGame = true;
-        keyPressConnection.start();
-    }
+    $.connection.hub.start();
 
     function displayWelcomeMessage(playerName, shipColour) {
         var message = 'Welcome to the game, ' + playerName + '.';
@@ -69,12 +58,12 @@
 
     function drawShip(ship) {
         context.save();
-        if(ship.Dir === -1) {
-            context.drawImage(imageObj, ship.X - 10, ship.Y - 20);    
+        if (ship.Dir === -1) {
+            context.drawImage(imageObj, ship.X - 10, ship.Y - 20);
         }
         if (ship.Dir === 1) {
             context.drawImage(imageObjRight, ship.X - 10, ship.Y - 20);
-        }        
+        }
         context.fillStyle = ship.Colour;
         context.font = "bold 16px Arial";
         context.fillText(ship.Name, ship.X - 15, ship.Y - 25);
@@ -97,21 +86,19 @@
     // Wire up the key presses etc
     $(document).keydown(function (e) {
         if (inGame) {
-            var msg = 'd:' + currentPlayerName + ':' + e.keyCode;
-            keyPressConnection.send(msg);
+            hub.keyboardEvent(true, currentPlayerName, e.keyCode);
         }
     });
 
     $(document).keyup(function (e) {
         if (inGame) {
-            var msg = 'u:' + currentPlayerName + ':' + e.keyCode;
-            keyPressConnection.send(msg);
+            hub.keyboardEvent(false, currentPlayerName, e.keyCode);
         }
     });
 
     $('#join').click(function () {
         var playerName = $('#playername').val();
         currentPlayerName = playerName;
-        playerConnection.send(playerName);
+        hub.newPlayerConnected(playerName);
     });
 });

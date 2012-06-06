@@ -13,7 +13,7 @@ namespace SignalRGame.Classes.GameElements
 
         private bool _stop;
         private readonly List<Ship> _ships;
-        private readonly List<ClientHandler> _handlers;
+        private readonly List<Gamehub> _handlers;
 
         public static void StartGame()
         {
@@ -31,7 +31,7 @@ namespace SignalRGame.Classes.GameElements
             _game.AddShip(ship);
         }
 
-        public static void AddGameHandler(ClientHandler handler)
+        public static void AddGameHandler(Gamehub handler)
         {
             _game.AddHandler(handler);
         }
@@ -56,7 +56,7 @@ namespace SignalRGame.Classes.GameElements
         private Game()
         {
             _stop = false;
-            _handlers = new List<ClientHandler>();
+            _handlers = new List<Gamehub>();
             _ships =  new List<Ship>();            
         }
 
@@ -75,7 +75,7 @@ namespace SignalRGame.Classes.GameElements
             return _ships.First(x => x.Name == name);
         }
 
-        public void AddHandler(ClientHandler handler)
+        public void AddHandler(Gamehub handler)
         {
             _handlers.Add(handler);
         }
