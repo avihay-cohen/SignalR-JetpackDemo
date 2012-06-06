@@ -6,10 +6,10 @@ namespace SignalRGame.Classes.Connections
 
     public class KeyPressHandler : PersistentConnection 
     {
-        protected override System.Threading.Tasks.Task OnReceivedAsync(string clientId, string data)
+        protected override System.Threading.Tasks.Task OnReceivedAsync(SignalR.Hosting.IRequest request, string connectionId, string data)
         {
             var args = data.Split(':');
-            bool keyDown = ( args[0] == "d");
+            bool keyDown = (args[0] == "d");
             string shipName = args[1];
             int key = int.Parse(args[2]);
 
@@ -17,9 +17,9 @@ namespace SignalRGame.Classes.Connections
             switch (key)
             {
                 case 39:
-                    {                        
+                    {
                         ship.MovingRight = keyDown;
-                        if(keyDown)
+                        if (keyDown)
                         {
                             ship.Dir = 1;
                         }
@@ -46,7 +46,7 @@ namespace SignalRGame.Classes.Connections
                     }
             }
 
-            return base.OnReceivedAsync(clientId, data);
+            return base.OnReceivedAsync(request, connectionId, data);
         }
     }
 }

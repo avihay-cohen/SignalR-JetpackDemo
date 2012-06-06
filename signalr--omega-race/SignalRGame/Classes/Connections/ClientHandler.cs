@@ -7,10 +7,10 @@ namespace SignalRGame.Classes.Connections
 {
     public class ClientHandler : PersistentConnection
     {
-        protected override System.Threading.Tasks.Task OnConnectedAsync(HttpContextBase context, string clientId)
+        protected override System.Threading.Tasks.Task OnConnectedAsync(SignalR.Hosting.IRequest request, string connectionId)
         {
             Game.AddGameHandler(this);
-            return base.OnConnectedAsync(context, clientId);
+            return base.OnConnectedAsync(request, connectionId);
         }
 
         internal void Draw(List<Ship> ships, Arena arena)
