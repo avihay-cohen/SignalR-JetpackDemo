@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Threading.Tasks;
 using SignalR.Hubs;
 using SignalRGame.Classes.GameElements;
@@ -87,6 +88,8 @@ namespace SignalRGame.Classes.Connections
         /// </summary>        
         public void Draw(List<Ship> ships, Arena arena)
         {
+            DateTime now = DateTime.Now;
+       //     Debug.WriteLine(now.ToString() + "-" + now.Millisecond + ": " + "draw!");
             Clients.draw(new DrawInfo { Ships = ships.ToArray(), Arena = arena });            
         }
 

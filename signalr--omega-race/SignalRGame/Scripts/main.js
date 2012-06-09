@@ -1,30 +1,86 @@
-﻿$(document).ready(function () {
+﻿var stage;
+var w, h;
+var ships = [];
+var currentPlayerName = '';
+var inGame = false;
+var hub;
 
-    var imageObj = new Image();
-    imageObj.src = "../Images/jetpack.png";
+function initializeStage() {
+    var canvas = document.getElementById("game_area");
 
-    var imageObjRight = new Image();
-    imageObjRight.src = "../Images/jetpackRight.png";
+    stage = new Stage(canvas);
+    stage.autoClear = false;            // clear bg before draw?
 
-    // Proxy created on the fly
-    var hub = $.connection.gamehub;
+    w = canvas.width;
+    h = canvas.height;
 
-    hub.newPlayer = function (data) {
-        var playerName = data.Name;
-        if (isThisPlayer(playerName)) {
-            inGame = true;
-            $('#login').hide();
-        }
-        displayWelcomeMessage(playerName, data.Colour);
-    };
+    this.bg = new Bitmap("Images/bg.png");
+    this.bg.x = 0;
+    this.bg.y = 0;
+    stage.addChild(this.bg);
 
-    hub.draw = function (data) {
-        ships = data.Ships;
-        arena = data.Arena;
-        refreshScreen();
-    };
+    Ticker.useRAF = true;
+    Ticker.setFPS(60);
+    Ticker.addListener(window);
+}
 
-    $.connection.hub.start();
+function tick() {
+    for (var clientIndex = 0; clientIndex < ships.length; clientIndex++) {
+        var clientShip = ships[clientIndex];
+        clientShip.clientTick();
+    }
+
+    stage.update();
+}
+
+initializeStage();
+
+$(document).ready(function () {
+
+    function isThisPlayer(playerName) {
+        return (playerName == currentPlayerName);
+    }
+
+    function initializeConnection() {
+        hub = $.connection.gamehub;
+
+        hub.newPlayer = function (data) {
+            var playerName = data.Name;
+            if (isThisPlayer(playerName)) {
+                inGame = true;
+                $('#login').hide();
+            }
+            displayWelcomeMessage(playerName, data.Colour);
+        };
+
+        // TODO BDM: Rename. This is a "server gamestate update"
+        hub.draw = function (data) {
+            // Sync ships from server with ships on client
+            for (var i = 0; i < data.Ships.length; i++) {
+
+                var serverShip = data.Ships[i];
+
+                var foundShip = false;
+
+                for (var clientIndex = 0; clientIndex < ships.length; clientIndex++) {
+                    var clientShip = ships[clientIndex];
+
+                  if (clientShip.data.Name === serverShip.Name) {
+                    foundShip = true;                    
+                    clientShip.updateShip(serverShip);
+                  }
+
+                }
+
+                if (!foundShip) {
+                    var newShip = new Ship(serverShip, stage);                    
+                    ships.push(newShip);
+                }
+            }
+        };
+
+        $.connection.hub.start();
+    }
 
     function displayWelcomeMessage(playerName, shipColour) {
         var message = 'Welcome to the game, ' + playerName + '.';
@@ -35,55 +91,7 @@
         });
     }
 
-    function isThisPlayer(playerName) {
-        return (playerName == currentPlayerName);
-    }
-
-    var ships = [];
-    var currentPlayerName = '';
-    var inGame = false;
-    var context;
-    var arena;
-
-    function drawArena() {
-        context.save();
-        context.beginPath();
-        context.strokeStyle = "yellow";
-        var boundary = arena.Boundary;
-        context.strokeRect(boundary.X, boundary.Y, boundary.Width, boundary.Height);
-        context.closePath();
-        context.stroke();
-        context.restore();
-    }
-
-    function drawShip(ship) {
-        context.save();
-        if (ship.Dir === -1) {
-            context.drawImage(imageObj, ship.X - 10, ship.Y - 20);
-        }
-        if (ship.Dir === 1) {
-            context.drawImage(imageObjRight, ship.X - 10, ship.Y - 20);
-        }
-        context.fillStyle = ship.Colour;
-        context.font = "bold 16px Arial";
-        context.fillText(ship.Name, ship.X - 15, ship.Y - 25);
-    }
-
-    function drawShips() {
-        for (var i = 0; i < ships.length; i++)
-            drawShip(ships[i]);
-    }
-
-    function refreshScreen() {
-        game_area.width = arena.Width;
-        game_area.height = arena.Height;
-        context = game_area.getContext('2d');
-        context.clearRect(0, 0, arena.Width, arena.Height);
-        drawArena();
-        drawShips();
-    }
-
-    // Wire up the key presses etc
+    // Wire up the key presses
     $(document).keydown(function (e) {
         if (inGame) {
             hub.keyboardEvent(true, currentPlayerName, e.keyCode);
@@ -96,9 +104,12 @@
         }
     });
 
+    // Join button
     $('#join').click(function () {
         var playerName = $('#playername').val();
         currentPlayerName = playerName;
         hub.newPlayerConnected(playerName);
     });
+
+    initializeConnection();
 });
