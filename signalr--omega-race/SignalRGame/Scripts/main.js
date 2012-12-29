@@ -34,13 +34,12 @@ function tick() {
 $(document).ready(function () {
 
 
-    
+
     var hub = $.connection.gamehub;
 
     var ViewModelObj = function () {
         var self = this;
         self.localPlayerName = ko.observable('anonymous');
-        self.koTest = ko.observable('testertje');
         self.join = function () {
             hub.newPlayerConnected(self.localPlayerName());
         };
@@ -49,17 +48,14 @@ $(document).ready(function () {
         };
         self.inGame = ko.observable(false);
         self.inMenu = ko.computed(function () { return !self.inGame(); });
+        self.offlineMode = ko.observable(true);
     };
-
-
 
     initializeStage();
 
     var vm = new ViewModelObj();
 
     ko.applyBindings(vm);
-
-    
 
     // Wire up the key presses
     $(document).keydown(function (e) {
@@ -111,5 +107,6 @@ $(document).ready(function () {
 
     $.connection.hub.start();
 
+    vm.offlineMode(false);
 });
 

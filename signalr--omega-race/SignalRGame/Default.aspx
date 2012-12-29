@@ -20,12 +20,13 @@
         </style>
     </head>
     <body>
+        <h2>Sandbox</h2>
         <canvas id="game_area" width="1000" height="500"></canvas>
         <br /><br />
         <div><label id="notifications"/></div>
         <br /><br />
         <div data-bind="visible: inMenu"><input type="text" data-bind="value: localPlayerName" /><a href="#" data-bind="click: join">Join The Arena!</a></div>
-        <span data-bind="text:koTest"></span>        
+        <div data-bind="visible: offlineMode">Offline mode!</div>      
         <script type="text/javascript" src="Scripts/ship.js"></script>
         <script type="text/javascript" src="Scripts/main.js"></script>
     </body>
