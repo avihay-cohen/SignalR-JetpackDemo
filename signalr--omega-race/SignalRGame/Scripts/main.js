@@ -105,12 +105,14 @@ $(document).ready(function () {
         }
     });
 
-    // Join button
-    $('#join').click(function () {
+    initializeConnection();
+});
+
+ko.applyBindings(new function () {
+    self.koTest = ko.observable('testertje');
+    self.join = function() {
         var playerName = $('#playername').val();
         currentPlayerName = playerName;
         hub.newPlayerConnected(playerName);
-    });
-
-    initializeConnection();
+    };
 });

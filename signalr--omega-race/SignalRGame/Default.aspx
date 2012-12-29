@@ -8,6 +8,7 @@
         <script src='<%= ResolveClientUrl("~/signalr/hubs") %>' type="text/javascript"></script>
         <script type="text/javascript" src="Scripts/lib/easeljs-0.4.2.min.js"></script>
         <script type="text/javascript" src="Scripts/lib/preloadjs-0.1.0.min.js"></script>
+        <script type="text/javascript" src="Scripts/lib/knockout-2.2.0.js"></script>
         
         <style type="text/css">
          body {
@@ -23,8 +24,8 @@
         <br /><br />
         <div><label id="notifications"/></div>
         <br /><br />
-        <div id= "login"><input type="text" id="playername"/><a id='join' href="#">Join The Arena!</a></div>
-                
+        <div id= "login"><input type="text" id="playername"/><a href="#" data-bind="click: join">Join The Arena!</a></div>
+        <span data-bind="text:koTest"></span>        
         <script type="text/javascript" src="Scripts/ship.js"></script>
         <script type="text/javascript" src="Scripts/main.js"></script>
     </body>

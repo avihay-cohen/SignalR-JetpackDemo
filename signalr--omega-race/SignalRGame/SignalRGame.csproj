@@ -74,6 +74,7 @@
     <Content Include="Images\bg.png" />
     <Content Include="Images\jetpack.png" />
     <Content Include="Images\jetpackRight.png" />
+    <Content Include="Scripts\lib\knockout-2.2.0.js" />
     <Content Include="Scripts\lib\easeljs-0.4.2.min.js" />
     <Content Include="Scripts\lib\jquery-1.7.2-vsdoc.js" />
     <Content Include="Scripts\lib\jquery-1.7.2.js" />
