@@ -55,6 +55,7 @@ $(document).ready(function () {
 
         // TODO BDM: Rename. This is a "server gamestate update"
         hub.draw = function (data) {
+
             // Sync ships from server with ships on client
             for (var i = 0; i < data.Ships.length; i++) {
 
@@ -65,15 +66,15 @@ $(document).ready(function () {
                 for (var clientIndex = 0; clientIndex < ships.length; clientIndex++) {
                     var clientShip = ships[clientIndex];
 
-                  if (clientShip.data.Name === serverShip.Name) {
-                    foundShip = true;                    
-                    clientShip.updateShip(serverShip);
-                  }
+                    if (clientShip.data.Name === serverShip.Name) {
+                        foundShip = true;
+                        clientShip.updateShip(serverShip);
+                    }
 
                 }
 
                 if (!foundShip) {
-                    var newShip = new Ship(serverShip, stage);                    
+                    var newShip = new Ship(serverShip, stage);
                     ships.push(newShip);
                 }
             }

@@ -31,7 +31,7 @@ namespace SignalRGame.Classes.GameElements
         {
             if (MovingLeft) XSpeed -= SpeedIncrease;
             if (MovingRight) XSpeed += SpeedIncrease;
-            if (MovingUp) YSpeed -= SpeedIncrease;
+            if (MovingUp) YSpeed -= SpeedIncrease * 1.2;
             if (MovingDown) YSpeed += SpeedIncrease;
 
             ConstrainToTrack();
@@ -40,9 +40,14 @@ namespace SignalRGame.Classes.GameElements
             X += XSpeed;
             Y += YSpeed;
 
+            var acc = 9.8;
+            YSpeed += acc / 18;
+
             // Slow down
             XSpeed *= FrictionFactor;
             YSpeed *= FrictionFactor;
+
+
 
             // Limit speed to maximum
             if (XSpeed < -MaxSpeed) XSpeed = -MaxSpeed;
@@ -60,22 +65,26 @@ namespace SignalRGame.Classes.GameElements
             if (X <= Game.Arena.Boundary.Left)
             {
                 X = Game.Arena.Boundary.Left + BounceBackPixels;
-                XSpeed *= -1;
+                //XSpeed *= -1;
+                XSpeed = 0;
             }
             if (X >= Game.Arena.Boundary.Right)
             {
                 X = Game.Arena.Boundary.Right - BounceBackPixels;
-                XSpeed *= -1;
+                XSpeed = 0;
+                //XSpeed *= -1;
             }
             if (Y >= Game.Arena.Boundary.Bottom)
             {
                 Y = Game.Arena.Boundary.Bottom - BounceBackPixels;
-                YSpeed *= -1;
+                YSpeed = 0;
+                //  YSpeed *= -1;
             }
             if (Y <= Game.Arena.Boundary.Top)
             {
                 Y = Game.Arena.Boundary.Top + BounceBackPixels;
-                YSpeed *= -1;
+                YSpeed = 0;
+              //  YSpeed *= -1;
             }
         }
     }

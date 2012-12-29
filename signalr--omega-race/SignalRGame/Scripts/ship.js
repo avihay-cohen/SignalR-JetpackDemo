@@ -1,6 +1,8 @@
 ﻿function Ship(shipdata, stage) {
     this.data = shipdata;
 
+    this.clientSidePredictionEnabled = false;
+
     // Main sprite
     this.jetpack = new Bitmap("Images/jetpack.png");
     this.jetpack.regX = 16;
@@ -26,9 +28,11 @@
 
     this.clientTick = function () {
         // divide by 2, because the server side loop runs at half speed (+- 30 fps)
-        this.data.X = this.data.X + (this.data.XSpeed / 2);
-        this.data.Y = this.data.Y + (this.data.YSpeed / 2);
-
+        if (this.clientSidePredictionEnabled === true) {
+            this.data.X = this.data.X + (this.data.XSpeed / 2);
+            this.data.Y = this.data.Y + (this.data.YSpeed / 2);            
+        }
+        
         this.updateSpritePosition();
     };
 

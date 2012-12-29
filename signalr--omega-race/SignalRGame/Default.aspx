@@ -5,7 +5,7 @@
         <script type="text/javascript" src="Scripts/lib/jquery-1.7.2.min.js"></script>
         <script type="text/javascript" src="Scripts/lib/json2.min.js"></script>
         <script type="text/javascript" src="Scripts/lib/jquery.signalR-0.5.0.min.js"></script>
-        <script src="/signalr/hubs" type="text/javascript"></script>
+        <script src='<%= ResolveClientUrl("~/signalr/hubs") %>' type="text/javascript"></script>
         <script type="text/javascript" src="Scripts/lib/easeljs-0.4.2.min.js"></script>
         <script type="text/javascript" src="Scripts/lib/preloadjs-0.1.0.min.js"></script>
         
