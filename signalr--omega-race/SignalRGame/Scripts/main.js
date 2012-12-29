@@ -1,9 +1,6 @@
 ﻿var stage;
 var w, h;
 var ships = [];
-var currentPlayerName = '';
-var inGame = false;
-var hub;
 
 function initializeStage() {
     var canvas = document.getElementById("game_area");
@@ -33,86 +30,86 @@ function tick() {
     stage.update();
 }
 
-initializeStage();
 
 $(document).ready(function () {
 
-    function isThisPlayer(playerName) {
-        return (playerName == currentPlayerName);
-    }
 
-    function initializeConnection() {
-        hub = $.connection.gamehub;
+    
+    var hub = $.connection.gamehub;
 
-        hub.newPlayer = function (data) {
-            var playerName = data.Name;
-            if (isThisPlayer(playerName)) {
-                inGame = true;
-                $('#login').hide();
-            }
-            displayWelcomeMessage(playerName, data.Colour);
+    var ViewModelObj = function () {
+        var self = this;
+        self.localPlayerName = ko.observable('anonymous');
+        self.koTest = ko.observable('testertje');
+        self.join = function () {
+            hub.newPlayerConnected(self.localPlayerName());
         };
-
-        // TODO BDM: Rename. This is a "server gamestate update"
-        hub.draw = function (data) {
-
-            // Sync ships from server with ships on client
-            for (var i = 0; i < data.Ships.length; i++) {
-
-                var serverShip = data.Ships[i];
-
-                var foundShip = false;
-
-                for (var clientIndex = 0; clientIndex < ships.length; clientIndex++) {
-                    var clientShip = ships[clientIndex];
-
-                    if (clientShip.data.Name === serverShip.Name) {
-                        foundShip = true;
-                        clientShip.updateShip(serverShip);
-                    }
-
-                }
-
-                if (!foundShip) {
-                    var newShip = new Ship(serverShip, stage);
-                    ships.push(newShip);
-                }
-            }
+        self.isThisPlayer = function (playerName) {
+            return (playerName == self.localPlayerName());
         };
+        self.inGame = ko.observable(false);
+        self.inMenu = ko.computed(function () { return !self.inGame(); });
+    };
 
-        $.connection.hub.start();
-    }
 
-    function displayWelcomeMessage(playerName, shipColour) {
-        var message = 'Welcome to the game, ' + playerName + '.';
-        var notificationArea = $('#notifications');
-        notificationArea.css('color', shipColour);
-        notificationArea.html(message).fadeIn(3000, function () {
-            notificationArea.html(message).fadeOut(3000);
-        });
-    }
+
+    initializeStage();
+
+    var vm = new ViewModelObj();
+
+    ko.applyBindings(vm);
+
+    
 
     // Wire up the key presses
     $(document).keydown(function (e) {
-        if (inGame) {
-            hub.keyboardEvent(true, currentPlayerName, e.keyCode);
+        if (vm.inGame()) {
+            hub.keyboardEvent(true, vm.localPlayerName(), e.keyCode);
         }
     });
 
     $(document).keyup(function (e) {
-        if (inGame) {
-            hub.keyboardEvent(false, currentPlayerName, e.keyCode);
+        if (vm.inGame()) {
+            hub.keyboardEvent(false, vm.localPlayerName(), e.keyCode);
         }
     });
 
-    initializeConnection();
+    hub.newPlayer = function (data) {
+        var playerName = data.Name;
+        if (vm.isThisPlayer(playerName)) {
+            vm.inGame(true);
+        }
+        console.log('Welcome, ' + playerName);
+    };
+
+    // TODO BDM: Rename. This is a "server gamestate update"
+    hub.draw = function (data) {
+
+        // Sync ships from server with ships on client
+        for (var i = 0; i < data.Ships.length; i++) {
+
+            var serverShip = data.Ships[i];
+
+            var foundShip = false;
+
+            for (var clientIndex = 0; clientIndex < ships.length; clientIndex++) {
+                var clientShip = ships[clientIndex];
+
+                if (clientShip.data.Name === serverShip.Name) {
+                    foundShip = true;
+                    clientShip.updateShip(serverShip);
+                }
+
+            }
+
+            if (!foundShip) {
+                var newShip = new Ship(serverShip, stage);
+                ships.push(newShip);
+            }
+        }
+    };
+
+    $.connection.hub.start();
+
 });
 
-ko.applyBindings(new function () {
-    self.koTest = ko.observable('testertje');
-    self.join = function() {
-        var playerName = $('#playername').val();
-        currentPlayerName = playerName;
-        hub.newPlayerConnected(playerName);
-    };
-});

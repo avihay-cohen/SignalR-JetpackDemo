@@ -24,7 +24,7 @@
         <br /><br />
         <div><label id="notifications"/></div>
         <br /><br />
-        <div id= "login"><input type="text" id="playername"/><a href="#" data-bind="click: join">Join The Arena!</a></div>
+        <div data-bind="visible: inMenu"><input type="text" data-bind="value: localPlayerName" /><a href="#" data-bind="click: join">Join The Arena!</a></div>
         <span data-bind="text:koTest"></span>        
         <script type="text/javascript" src="Scripts/ship.js"></script>
         <script type="text/javascript" src="Scripts/main.js"></script>
