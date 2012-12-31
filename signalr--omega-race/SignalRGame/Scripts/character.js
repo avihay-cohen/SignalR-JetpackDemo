@@ -13,7 +13,7 @@
         bottom: { get: function () { return this.y + this.height; } }
     });
 
-    self.update = function (game) {
+    self.update = function () {
         var friction = 0;
         if (self.bear.vx > 0.3) {
             friction = -0.3;
@@ -26,23 +26,23 @@
             friction = -self.bear.vx;
         }
         if (self.bear.jumping) {
-            if (!game.input.up || --self.bear.jumpBoost < 0) {
+            if (!self.game.input.up || --self.bear.jumpBoost < 0) {
                 self.bear.ay = 0;
             }
         } else {
-            if (game.input.up) {
+            if (self.game.input.up) {
                 self.bear.jumpBoost = 5;
                 self.bear.ay = -5;
-                game.assets['../Sounds/jump.wav'].clone().play();
+                self.game.assets['../Sounds/jump.wav'].clone().play();
             }
         }
         this.ax = 0;
-        if (game.input.left) self.bear.ax -= 0.5;
-        if (game.input.right) self.bear.ax += 0.5;
+        if (self.game.input.left) self.bear.ax -= 0.5;
+        if (self.game.input.right) self.bear.ax += 0.5;
         if (self.bear.ax > 0) self.bear.scaleX = 1;
         if (self.bear.ax < 0) self.bear.scaleX = -1;
         if (self.bear.ax != 0) {
-            if (game.frame % 3 == 0) {
+            if (self.game.frame % 3 == 0) {
                 self.bear.pose++;
                 self.bear.pose %= 2;
             }
@@ -110,28 +110,30 @@
         self.bear.x = dest.x - 5;
         self.bear.y = dest.y - 2;
 
-        if (self.bear.y > 320) {
-            // Die
-            game.assets['../Sounds/gameover.wav'].play();
-            var score = Math.round(self.bear.x);
-            self.bear.frame = 3;
-            self.bear.vy = -20;
-            self.bear.addEventListener('enterframe', function () {
-                self.bear.vy += 2;
-                self.bear.y += Math.min(Math.max(self.bear.vy, -10), 10);
-                if (self.bear.y > 320) {
-                    game.end(score, score + 'blablabla');
-                }
-            });
-            self.bear.removeEventListener('enterframe', arguments.callee);
-        }
+        if (self.bear.y > 320) { self.die(); }
 
         // Move label
         self.nameLabel.x = self.bear.x + 5;
         self.nameLabel.y = self.bear.y - 20;
     };
 
+    self.die = function() {
+        self.game.assets['../Sounds/gameover.wav'].play();
+        var score = Math.round(self.bear.x);
+        self.bear.frame = 3;
+        self.bear.vy = -20;
+        self.bear.addEventListener('enterframe', function () {
+            self.bear.vy += 2;
+            self.bear.y += Math.min(Math.max(self.bear.vy, -10), 10);
+            if (self.bear.y > 320) {
+                self.game.end(score, score + 'blablabla');
+            }
+        });
+        self.bear.removeEventListener('enterframe', arguments.callee);
+    };
+
     self.load = function (game, stage) {
+        self.game = game;
         self.stage = stage;
         self.bear = new Sprite(32, 32);
         self.bear.x = 8;
@@ -144,8 +146,7 @@
         self.bear.jumping = true;
         self.bear.jumpBoost = 0;
         self.bear.image = game.assets['../Images/chara1.gif'];
-        self.bear.addEventListener('enterframe', function (e) { self.update(game); });
-
+        self.bear.addEventListener('enterframe', self.update);
         self.nameLabel = new Label("test");
     };
 }
