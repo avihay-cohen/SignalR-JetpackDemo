@@ -13,6 +13,16 @@
         bottom: { get: function () { return this.y + this.height; } }
     });
 
+    self.jump = function() {
+        self.bear.jumpBoost = 5;
+        self.bear.ay = -5;
+        self.game.assets['../Sounds/jump.wav'].clone().play();
+    };
+
+    self.hitTestRight = function (boundary, crossing, dest) {
+        return ((map.hitTest(boundary, crossing) && !map.hitTest(boundary - 16, crossing)) || (map.hitTest(boundary, crossing + dest.height) && !map.hitTest(boundary - 16, crossing + dest.height)));
+    };
+
     self.update = function () {
         var friction = 0;
         if (self.bear.vx > 0.3) {
@@ -31,9 +41,7 @@
             }
         } else {
             if (self.game.input.up) {
-                self.bear.jumpBoost = 5;
-                self.bear.ay = -5;
-                self.game.assets['../Sounds/jump.wav'].clone().play();
+                self.jump();
             }
         }
         this.ax = 0;
@@ -54,10 +62,9 @@
         self.bear.vy += self.bear.ay + 2; // 2 is gravity
         self.bear.vx = Math.min(Math.max(self.bear.vx, -10), 10);
         self.bear.vy = Math.min(Math.max(self.bear.vy, -10), 10);
-        var dest = new self.Rectangle(
-                self.bear.x + self.bear.vx + 5, self.bear.y + self.bear.vy + 2,
-                self.bear.width - 10, self.bear.height - 2
-            );
+
+        var dest = new self.Rectangle(self.bear.x + self.bear.vx + 5, self.bear.y + self.bear.vy + 2, self.bear.width - 10, self.bear.height - 2);
+
         self.bear.jumping = true;
         if (dest.x < -self.stage.x) {
             dest.x = -self.stage.x;
@@ -68,18 +75,25 @@
             var boundary, crossing;
             var dx = dest.x - self.bear.x - 5;
             var dy = dest.y - self.bear.y - 2;
+
             if (dx > 0 && Math.floor(dest.right / 16) != Math.floor((dest.right - dx) / 16)) {
+                
                 boundary = Math.floor(dest.right / 16) * 16;
                 crossing = (dest.right - boundary) / dx * dy + dest.y;
-                if ((map.hitTest(boundary, crossing) && !map.hitTest(boundary - 16, crossing)) || (map.hitTest(boundary, crossing + dest.height) && !map.hitTest(boundary - 16, crossing + dest.height))) {
+                
+                if (self.hitTestRight(boundary, crossing, dest)) {                    
                     self.bear.vx = 0;
                     dest.x = boundary - dest.width - 0.01;
                     continue;
                 }
+                
             } else if (dx < 0 && Math.floor(dest.x / 16) != Math.floor((dest.x - dx) / 16)) {
+                
                 boundary = Math.floor(dest.x / 16) * 16 + 16;
                 crossing = (boundary - dest.x) / dx * dy + dest.y;
+                
                 if ((map.hitTest(boundary - 16, crossing) && !map.hitTest(boundary, crossing)) || (map.hitTest(boundary - 16, crossing + dest.height) && !map.hitTest(boundary, crossing + dest.height))) {
+                    console.log('hit left');
                     self.bear.vx = 0;
                     dest.x = boundary + 0.01;
                     continue;
@@ -89,6 +103,7 @@
                 boundary = Math.floor(dest.bottom / 16) * 16;
                 crossing = (dest.bottom - boundary) / dy * dx + dest.x;
                 if ((map.hitTest(crossing, boundary) && !map.hitTest(crossing, boundary - 16)) || (map.hitTest(crossing + dest.width, boundary) && !map.hitTest(crossing + dest.width, boundary - 16))) {
+                    // player is standing on floor
                     self.bear.jumping = false;
                     self.bear.vy = 0;
                     dest.y = boundary - dest.height - 0.01;
@@ -98,6 +113,7 @@
                 boundary = Math.floor(dest.y / 16) * 16 + 16;
                 crossing = (boundary - dest.y) / dy * dx + dest.x;
                 if ((map.hitTest(crossing, boundary - 16) && !map.hitTest(crossing, boundary)) || (map.hitTest(crossing + dest.width, boundary - 16) && !map.hitTest(crossing + dest.width, boundary))) {
+                    console.log('player hit his head while jumping');
                     self.bear.vy = 0;
                     dest.y = boundary + 0.01;
                     continue;
@@ -119,16 +135,9 @@
 
     self.die = function() {
         self.game.assets['../Sounds/gameover.wav'].play();
-        var score = Math.round(self.bear.x);
         self.bear.frame = 3;
         self.bear.vy = -20;
-        self.bear.addEventListener('enterframe', function () {
-            self.bear.vy += 2;
-            self.bear.y += Math.min(Math.max(self.bear.vy, -10), 10);
-            if (self.bear.y > 320) {
-                self.game.end(score, score + 'blablabla');
-            }
-        });
+        self.game.stop(999, 'game over');
         self.bear.removeEventListener('enterframe', arguments.callee);
     };
 
