@@ -12,8 +12,8 @@
         right: { get: function () { return this.x + this.width; } },
         bottom: { get: function () { return this.y + this.height; } }
     });
-    
-    self.update = function(game) {
+
+    self.update = function (game) {
         var friction = 0;
         if (self.bear.vx > 0.3) {
             friction = -0.3;
@@ -64,14 +64,14 @@
             self.bear.vx = 0;
         }
         while (true) {
+
             var boundary, crossing;
             var dx = dest.x - self.bear.x - 5;
             var dy = dest.y - self.bear.y - 2;
             if (dx > 0 && Math.floor(dest.right / 16) != Math.floor((dest.right - dx) / 16)) {
                 boundary = Math.floor(dest.right / 16) * 16;
                 crossing = (dest.right - boundary) / dx * dy + dest.y;
-                if ((map.hitTest(boundary, crossing) && !map.hitTest(boundary - 16, crossing)) ||
-                        (map.hitTest(boundary, crossing + dest.height) && !map.hitTest(boundary - 16, crossing + dest.height))) {
+                if ((map.hitTest(boundary, crossing) && !map.hitTest(boundary - 16, crossing)) || (map.hitTest(boundary, crossing + dest.height) && !map.hitTest(boundary - 16, crossing + dest.height))) {
                     self.bear.vx = 0;
                     dest.x = boundary - dest.width - 0.01;
                     continue;
@@ -79,8 +79,7 @@
             } else if (dx < 0 && Math.floor(dest.x / 16) != Math.floor((dest.x - dx) / 16)) {
                 boundary = Math.floor(dest.x / 16) * 16 + 16;
                 crossing = (boundary - dest.x) / dx * dy + dest.y;
-                if ((map.hitTest(boundary - 16, crossing) && !map.hitTest(boundary, crossing)) ||
-                        (map.hitTest(boundary - 16, crossing + dest.height) && !map.hitTest(boundary, crossing + dest.height))) {
+                if ((map.hitTest(boundary - 16, crossing) && !map.hitTest(boundary, crossing)) || (map.hitTest(boundary - 16, crossing + dest.height) && !map.hitTest(boundary, crossing + dest.height))) {
                     self.bear.vx = 0;
                     dest.x = boundary + 0.01;
                     continue;
@@ -89,8 +88,7 @@
             if (dy > 0 && Math.floor(dest.bottom / 16) != Math.floor((dest.bottom - dy) / 16)) {
                 boundary = Math.floor(dest.bottom / 16) * 16;
                 crossing = (dest.bottom - boundary) / dy * dx + dest.x;
-                if ((map.hitTest(crossing, boundary) && !map.hitTest(crossing, boundary - 16)) ||
-                        (map.hitTest(crossing + dest.width, boundary) && !map.hitTest(crossing + dest.width, boundary - 16))) {
+                if ((map.hitTest(crossing, boundary) && !map.hitTest(crossing, boundary - 16)) || (map.hitTest(crossing + dest.width, boundary) && !map.hitTest(crossing + dest.width, boundary - 16))) {
                     self.bear.jumping = false;
                     self.bear.vy = 0;
                     dest.y = boundary - dest.height - 0.01;
@@ -99,8 +97,7 @@
             } else if (dy < 0 && Math.floor(dest.y / 16) != Math.floor((dest.y - dy) / 16)) {
                 boundary = Math.floor(dest.y / 16) * 16 + 16;
                 crossing = (boundary - dest.y) / dy * dx + dest.x;
-                if ((map.hitTest(crossing, boundary - 16) && !map.hitTest(crossing, boundary)) ||
-                        (map.hitTest(crossing + dest.width, boundary - 16) && !map.hitTest(crossing + dest.width, boundary))) {
+                if ((map.hitTest(crossing, boundary - 16) && !map.hitTest(crossing, boundary)) || (map.hitTest(crossing + dest.width, boundary - 16) && !map.hitTest(crossing + dest.width, boundary))) {
                     self.bear.vy = 0;
                     dest.y = boundary + 0.01;
                     continue;
@@ -116,7 +113,7 @@
         if (self.bear.y > 320) {
             // Die
             game.assets['../Sounds/gameover.wav'].play();
-            var score = Math.round(bear.x);
+            var score = Math.round(self.bear.x);
             self.bear.frame = 3;
             self.bear.vy = -20;
             self.bear.addEventListener('enterframe', function () {
