@@ -32,6 +32,7 @@
 <%--        <script type="text/javascript" src="Scripts/ship.js"></script>
         <script type="text/javascript" src="Scripts/main.js"></script>--%>
         <script type="text/javascript" src="Scripts/map.js"></script>
+        <script type="text/javascript" src="Scripts/character.js"></script>
         <script type="text/javascript" src="Scripts/game.js"></script>
     </body>
 </html>
