@@ -72,8 +72,13 @@
     <Content Include="Default.aspx" />
     <Content Include="Global.asax" />
     <Content Include="Images\bg.png" />
+    <Content Include="Images\chara1.gif" />
+    <Content Include="Images\icon0.png" />
     <Content Include="Images\jetpack.png" />
     <Content Include="Images\jetpackRight.png" />
+    <Content Include="Images\map2.gif" />
+    <Content Include="Scripts\game.js" />
+    <Content Include="Scripts\lib\enchant.min.js" />
     <Content Include="Scripts\lib\knockout-2.2.0.js" />
     <Content Include="Scripts\lib\easeljs-0.4.2.min.js" />
     <Content Include="Scripts\lib\jquery-1.7.2-vsdoc.js" />
@@ -85,7 +90,10 @@
     <Content Include="Scripts\lib\json2.min.js" />
     <Content Include="Scripts\main.js" />
     <Content Include="Scripts\lib\preloadjs-0.1.0.min.js" />
+    <Content Include="Scripts\map.js" />
     <Content Include="Scripts\ship.js" />
+    <Content Include="Sounds\gameover.wav" />
+    <Content Include="Sounds\jump.wav" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
