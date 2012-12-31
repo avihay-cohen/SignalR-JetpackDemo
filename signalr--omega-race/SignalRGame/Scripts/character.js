@@ -1,7 +1,8 @@
-﻿function Character(name) {
+﻿function Character(name, inControl) {
 
     var self = this;
     self.name = name;
+    self.inControl = inControl;
 
     self.Rectangle = enchant.Class.create({
         initialize: function (x, y, width, height) {
@@ -129,13 +130,15 @@
 
         if (self.bear.y > 320) { self.die(); }
 
-        // Move label
-        self.nameLabel.x = self.bear.x + 5;
-        self.nameLabel.y = self.bear.y - 20;
-
         if ($.connection.gamehub) {
             $.connection.gamehub.clientCharacterStatus(self.name, self.bear.x, self.bear.y);
         }
+    };
+
+    self.update2 = function() {
+        // Move label
+        self.nameLabel.x = self.bear.x + 5;
+        self.nameLabel.y = self.bear.y - 20;
     };
 
     self.die = function() {
@@ -160,7 +163,15 @@
         self.bear.jumping = true;
         self.bear.jumpBoost = 0;
         self.bear.image = game.assets['../Images/chara1.gif'];
-        self.bear.addEventListener('enterframe', self.update);
+
+        if(self.inControl) {
+            self.bear.addEventListener('enterframe', self.update);   
+        } else {
+            self.bear.addEventListener('enterframe', self.update2);
+        }
+
+        
+        
         self.nameLabel = new Label(self.name);
     };
 }

@@ -24,9 +24,11 @@
         var playerName = data.Name;
         if (vm.isThisPlayer(playerName)) {
             vm.inGame(true);
+            game.addPlayer(playerName);
+        } else {
+            game.addOtherPlayer(playerName);
         }
         console.log('Welcome, ' + playerName);
-        game.addPlayer(playerName);
     };
 
     hub.clientUpdateGameState = function (data) {
