@@ -89,7 +89,7 @@ namespace SignalRGame.Classes.Connections
         {
             DateTime now = DateTime.Now;
        //     Debug.WriteLine(now.ToString() + "-" + now.Millisecond + ": " + "draw!");
-            Clients.draw(new DrawInfo { Ships = ships.ToArray(), Arena = arena });            
+       //     Clients.draw(new DrawInfo { Ships = ships.ToArray(), Arena = arena });            
         }
 
 

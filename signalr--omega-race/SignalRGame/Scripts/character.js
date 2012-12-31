@@ -131,6 +131,8 @@
         // Move label
         self.nameLabel.x = self.bear.x + 5;
         self.nameLabel.y = self.bear.y - 20;
+        
+        // SEND UPDATE TO SERVER IF NEEDED!!!
     };
 
     self.die = function() {

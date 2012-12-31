@@ -33,8 +33,6 @@ function tick() {
 
 $(document).ready(function () {
 
-
-
     var hub = $.connection.gamehub;
 
     var ViewModelObj = function () {

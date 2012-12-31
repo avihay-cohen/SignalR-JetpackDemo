@@ -8,8 +8,6 @@
         <script type="text/javascript" src="Scripts/lib/jquery.signalR-0.5.0.min.js"></script>
         <script src='<%= ResolveClientUrl("~/signalr/hubs") %>' type="text/javascript"></script>
         <script type="text/javascript" src="Scripts/lib/enchant.min.js"></script>
-        <%--<script type="text/javascript" src="Scripts/lib/easeljs-0.4.2.min.js"></script>--%>
-        <script type="text/javascript" src="Scripts/lib/preloadjs-0.1.0.min.js"></script>
         <script type="text/javascript" src="Scripts/lib/knockout-2.2.0.js"></script>
         
         <style type="text/css">
@@ -29,8 +27,7 @@
         <br /><br />
         <div data-bind="visible: inMenu"><input type="text" data-bind="value: localPlayerName" /><a href="#" data-bind="click: join">Join The Arena!</a></div>
         <div data-bind="visible: offlineMode">Offline mode!</div>      
-<%--        <script type="text/javascript" src="Scripts/ship.js"></script>
-        <script type="text/javascript" src="Scripts/main.js"></script>--%>
+        <script type="text/javascript" src="Scripts/connection.js"></script>
         <script type="text/javascript" src="Scripts/map.js"></script>
         <script type="text/javascript" src="Scripts/character.js"></script>
         <script type="text/javascript" src="Scripts/game.js"></script>

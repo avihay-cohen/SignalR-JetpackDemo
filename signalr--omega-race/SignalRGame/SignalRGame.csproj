@@ -78,6 +78,7 @@
     <Content Include="Images\jetpackRight.png" />
     <Content Include="Images\map2.gif" />
     <Content Include="Scripts\character.js" />
+    <Content Include="Scripts\connection.js" />
     <Content Include="Scripts\game.js" />
     <Content Include="Scripts\lib\enchant.min.js" />
     <Content Include="Scripts\lib\knockout-2.2.0.js" />
@@ -89,10 +90,10 @@
     <Content Include="Scripts\lib\jquery.signalR-0.5.0.min.js" />
     <Content Include="Scripts\lib\json2.js" />
     <Content Include="Scripts\lib\json2.min.js" />
-    <Content Include="Scripts\main.js" />
+    <Content Include="Scripts\old\main.js" />
     <Content Include="Scripts\lib\preloadjs-0.1.0.min.js" />
     <Content Include="Scripts\map.js" />
-    <Content Include="Scripts\ship.js" />
+    <Content Include="Scripts\old\ship.js" />
     <Content Include="Sounds\gameover.wav" />
     <Content Include="Sounds\jump.wav" />
     <Content Include="Web.config" />
