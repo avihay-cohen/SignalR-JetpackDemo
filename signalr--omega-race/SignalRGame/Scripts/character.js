@@ -1,6 +1,7 @@
-﻿function Character() {
+﻿function Character(name) {
 
     var self = this;
+    self.name = name;
 
     self.Rectangle = enchant.Class.create({
         initialize: function (x, y, width, height) {
@@ -77,21 +78,21 @@
             var dy = dest.y - self.bear.y - 2;
 
             if (dx > 0 && Math.floor(dest.right / 16) != Math.floor((dest.right - dx) / 16)) {
-                
+
                 boundary = Math.floor(dest.right / 16) * 16;
                 crossing = (dest.right - boundary) / dx * dy + dest.y;
-                
-                if (self.hitTestRight(boundary, crossing, dest)) {                    
+
+                if (self.hitTestRight(boundary, crossing, dest)) {
                     self.bear.vx = 0;
                     dest.x = boundary - dest.width - 0.01;
                     continue;
                 }
-                
+
             } else if (dx < 0 && Math.floor(dest.x / 16) != Math.floor((dest.x - dx) / 16)) {
-                
+
                 boundary = Math.floor(dest.x / 16) * 16 + 16;
                 crossing = (boundary - dest.x) / dx * dy + dest.y;
-                
+
                 if ((map.hitTest(boundary - 16, crossing) && !map.hitTest(boundary, crossing)) || (map.hitTest(boundary - 16, crossing + dest.height) && !map.hitTest(boundary, crossing + dest.height))) {
                     console.log('hit left');
                     self.bear.vx = 0;
@@ -131,8 +132,10 @@
         // Move label
         self.nameLabel.x = self.bear.x + 5;
         self.nameLabel.y = self.bear.y - 20;
-        
-        // SEND UPDATE TO SERVER IF NEEDED!!!
+
+        if ($.connection.gamehub) {
+            $.connection.gamehub.clientCharacterStatus(self.name, self.bear.x, self.bear.y);
+        }
     };
 
     self.die = function() {
@@ -158,7 +161,7 @@
         self.bear.jumpBoost = 0;
         self.bear.image = game.assets['../Images/chara1.gif'];
         self.bear.addEventListener('enterframe', self.update);
-        self.nameLabel = new Label("test");
+        self.nameLabel = new Label(self.name);
     };
 }
 

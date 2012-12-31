@@ -26,6 +26,7 @@
             vm.inGame(true);
         }
         console.log('Welcome, ' + playerName);
+        game.addPlayer(playerName);
     };
 
     hub.clientUpdateGameState = function (data) {
