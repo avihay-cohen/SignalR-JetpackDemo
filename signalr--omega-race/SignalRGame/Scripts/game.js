@@ -13,7 +13,8 @@ function startGame() {
         38: 'up',
         39: 'right',
         40: 'down',
-        32: 'a' // SPACE
+        32: 'a', // SPACE
+        17: 'b'  // CONTROL
     };
 
     enchant.ENV.PREVENT_DEFAULT_KEY_CODES = [37, 38, 39, 40, 32];
@@ -48,6 +49,11 @@ function startGame() {
         game.rootScene.on('abuttondown', function (evt) {
             var bomba = new Bomb(vm.currentPlayer().bear.x, vm.currentPlayer().bear.y);
             stage.addChild(bomba.sprite);
+        });
+
+        game.rootScene.on('bbuttondown', function (evt) {
+            var bullet = new Bullet(vm.currentPlayer().bear.x, vm.currentPlayer().bear.y);
+            stage.addChild(bullet.sprite);
         });
 
         game.addPlayer = function (name) {
