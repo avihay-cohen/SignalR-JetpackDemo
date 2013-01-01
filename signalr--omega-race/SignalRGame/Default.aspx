@@ -23,12 +23,12 @@
                     <span class="icon-bar"></span>
                     </button>
                     <a class="brand" href="#">Sandbox</a>
-                    <div class="nav-collapse collapse">
+                  <%--  <div class="nav-collapse collapse">
                         <ul class="nav">
                             <li class=""><a href="#">Test</a></li>
                             <li class=""><a href="#">Test2</a></li>
                         </ul>
-                    </div>
+                    </div>--%>
                 </div>
             </div>
         </div>

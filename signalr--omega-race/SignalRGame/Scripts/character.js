@@ -180,14 +180,13 @@
         self.bear.y = data.Y;
     };
 
-
-
     self.die = function () {
         self.game.assets['../Sounds/gameover.wav'].play();
         self.score(self.score() - 10);
         self.bear.frame = self.relativeFrame(3);
         // TODO BDM: Use timer here!
         self.respawn();
+        vm.addToLog(self.nameFixed + ' legt het loodje!');
     };
 
 

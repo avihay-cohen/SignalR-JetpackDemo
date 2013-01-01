@@ -22,6 +22,9 @@ $(document).ready(function () {
         };
         self.showJoin = function () {
         };
+        self.addToLog = function (text) {
+            self.logEntries.push(text);
+        };
         self.join = function () {
             self.inGame(true);
             self.currentPlayer(game.addPlayer(self.localPlayerName()));
