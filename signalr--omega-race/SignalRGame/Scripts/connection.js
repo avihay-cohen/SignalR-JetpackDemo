@@ -12,6 +12,7 @@
         self.currentPlayer = ko.observable();
         self.editMode = ko.observable(false);
         self.isAdmin = ko.observable(true);
+        self.logEntries = ko.observableArray(["Welcome!"]);
         self.kickAll = function () {
             if (!self.isAdmin()) return;
             if (self.offlineMode()) return;

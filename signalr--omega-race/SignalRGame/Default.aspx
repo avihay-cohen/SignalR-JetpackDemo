@@ -10,16 +10,7 @@
         <script src='<%= ResolveClientUrl("~/signalr/hubs") %>' type="text/javascript"></script>
         <script type="text/javascript" src="Scripts/lib/enchant.min.js"></script>
         <script type="text/javascript" src="Scripts/lib/knockout-2.2.0.js"></script>
-        <script type="text/javascript" src="Scripts/lib/bootstrap.min.js"></script>
-        
-        <style type="text/css">
-         body {
-             background-color:#CCCCCC;
-         }
-         #game_area{
-             background-color:#000000;
-         }
-        </style>
+        <script type="text/javascript" src="Scripts/lib/bootstrap.min.js"></script>       
     </head>
     <body>
         <h2>Sandbox</h2>
@@ -61,8 +52,11 @@
         </div>
 
         
-        <div id="game-console">
-            
+        <div id="game-console" class="well">
+            <div data-bind="foreach: logEntries">
+                <div data-bind="text: $data"></div>
+            </div>
+            >&nbsp;<input type="text"/>
         </div>
         <div id="editor" class="well">
             <input type="checkbox" data-bind="value: editMode" />Edit mode
