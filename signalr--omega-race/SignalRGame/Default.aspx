@@ -2,7 +2,7 @@
 <html>
     <head>
         <meta name="viewport" content="width=device-width, user-scalable=no">
-        <title>JetPack Demo</title>
+        <title>Sandbox</title>
         <link href="Content/bootstrap.css" rel="stylesheet" type="text/css" />
         <link href="Content/custom.css" rel="stylesheet" type="text/css" />
         <script type="text/javascript" src="Scripts/lib/jquery-1.7.2.min.js"></script>
@@ -56,7 +56,7 @@
                                 <td data-bind="text: score"></td>
                                 <td>
                                     <div class="progress progress-danger">
-                                        <div class="bar" style="width: 80%"></div>
+                                        <div class="bar" data-bind="style: { width: health() + '%' }"></div>
                                     </div>                        
                                 </td>
                                 <td>

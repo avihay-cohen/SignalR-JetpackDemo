@@ -5,6 +5,7 @@
     self.score = ko.observable(0);
     self.inControl = inControl;
     self.skinIndex = 1;
+    self.health = ko.observable(100);
 
     self.Rectangle = enchant.Class.create({
         initialize: function (x, y, width, height) {
