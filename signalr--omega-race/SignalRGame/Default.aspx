@@ -110,14 +110,14 @@
             <div>
                 Name: <input type="text" data-bind="value: localPlayerName" /><br />    
             </div>
-            <div>
+<%--            <div>
                 Character:                 
                 <ul class="nav nav-pills">
                   <li class="active"><a href="#" class="char char0"></a></li>
                   <li><a href="#" class="char char1"></a></li>
                   <li><a href="#" class="char char2"></a></li>
                 </ul>
-            </div>
+            </div>--%>
 <%--            <div>
                 Team:
                 <ul class="nav nav-pills">

@@ -50,13 +50,15 @@ namespace SignalRGame.Classes.Connections
             Game.RemoveAllPlayers();
         }
 
-        public void clientCharacterStatus(string playerName, int x, int y)
+        public void clientCharacterStatus(string playerName, int x, int y, int dir, int skin)
         {
             try
             {
                 var ship = Game.GetShipByName(playerName);
                 ship.X = x;
                 ship.Y = y;
+                ship.Dir = dir;
+                ship.SkinIndex = skin;
             }
             catch (Exception e)
             {

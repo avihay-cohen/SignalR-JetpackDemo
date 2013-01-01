@@ -5,7 +5,7 @@
     self.nameFixed = name;
     self.score = ko.observable(0);
     self.inControl = inControl;
-    self.skinIndex = 1;
+    self.skinIndex = 0;
     self.health = ko.observable(100);
 
     self.Rectangle = enchant.Class.create({
@@ -175,7 +175,7 @@
         }
 
         if ($.connection.gamehub) {
-            $.connection.gamehub.clientCharacterStatus(self.nameFixed, self.bear.x, self.bear.y);
+            $.connection.gamehub.clientCharacterStatus(self.nameFixed, self.bear.x, self.bear.y, self.bear.scaleX, self.skinIndex);
         }
     };
 
@@ -188,6 +188,8 @@
     self.serverUpdate = function (data) {
         self.bear.x = data.X;
         self.bear.y = data.Y;
+        self.bear.scaleX = data.Dir;
+        self.skinIndex = data.SkinIndex;
     };
 
     self.die = function () {
