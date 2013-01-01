@@ -77,7 +77,7 @@
                     <div data-bind="foreach: logEntries">
                         <div data-bind="text: $data"></div>
                     </div>
-                    >&nbsp;<input type="text"/>
+                    <%-->&nbsp;<input type="text"/>--%>
                 </div>
                     
 <%--                <div id="editor" class="well">

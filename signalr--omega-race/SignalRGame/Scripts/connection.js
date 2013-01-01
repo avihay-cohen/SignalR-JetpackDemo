@@ -11,7 +11,7 @@ $(document).ready(function () {
         self.inMenu = ko.computed(function () { return !self.inGame(); });
         self.offlineMode = ko.observable(true);
         self.characters = ko.observableArray([]);
-        self.sortFunction = function(left, right) {
+        self.sortFunction = function (left, right) {
             return left.score() == right.score() ? 0 : (left.score() > right.score() ? -1 : 1);
         };
         self.sortedCharacters = ko.dependentObservable(function () {
@@ -32,6 +32,10 @@ $(document).ready(function () {
         self.showJoin = function () {
         };
         self.addToLog = function (text) {
+            if (self.logEntries().length > 4) {
+                self.logEntries.shift();
+            }
+
             self.logEntries.push(text);
         };
         self.join = function () {
