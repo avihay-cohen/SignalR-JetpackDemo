@@ -29,7 +29,8 @@ function startGame() {
         // mouse event
         game.rootScene.on('touchstart', function (evt) {
             console.log('click at ' + evt.localX + ' , ' + evt.localY);
-            
+            customMap.switchMap();
+
         });
 
         game.addPlayer = function (name) {
@@ -53,7 +54,7 @@ function startGame() {
 
         game.onload = function () {
 
-            var customMap = new CustomMap(16, 16);
+            customMap = new CustomMap(16, 16);
             customMap.load(game);
             map = customMap.map;
 
