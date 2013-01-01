@@ -34,8 +34,14 @@
     self.bear.jumpBoost = 0;
     self.bear.image = game.assets['../Images/chara1.gif'];
 
+    self.nameLabel = new Label(self.name());
 
+    stage.addChild(self.bear);
+    stage.addChild(self.nameLabel);
 
+    self.increaseScore = function(delta) {
+        self.score(self.score() + delta);
+    };
 
     self.relativeFrame = function (frame) {
         return frame + (self.skinIndex * 5);
@@ -125,7 +131,7 @@
                 crossing = (boundary - dest.x) / dx * dy + dest.y;
 
                 if ((map.hitTest(boundary - 16, crossing) && !map.hitTest(boundary, crossing)) || (map.hitTest(boundary - 16, crossing + dest.height) && !map.hitTest(boundary, crossing + dest.height))) {
-                    console.log('hit left');
+                    // hit left
                     self.bear.vx = 0;
                     dest.x = boundary + 0.01;
                     continue;
@@ -145,7 +151,7 @@
                 boundary = Math.floor(dest.y / 16) * 16 + 16;
                 crossing = (boundary - dest.y) / dy * dx + dest.x;
                 if ((map.hitTest(crossing, boundary - 16) && !map.hitTest(crossing, boundary)) || (map.hitTest(crossing + dest.width, boundary - 16) && !map.hitTest(crossing + dest.width, boundary))) {
-                    console.log('player hit his head while jumping');
+                    // player hit his head while jumping
                     self.bear.vy = 0;
                     dest.y = boundary + 0.01;
                     continue;
@@ -182,7 +188,7 @@
 
     self.die = function () {
         self.game.assets['../Sounds/gameover.wav'].play();
-        self.score(self.score() - 10);
+        self.increaseScore(-10);        
         self.bear.frame = self.relativeFrame(3);
         // TODO BDM: Use timer here!
         self.respawn();
@@ -200,9 +206,7 @@
     } else {
         self.bear.addEventListener('enterframe', self.update2);
     }
-
-    self.nameLabel = new Label(self.name());
-
+    
     self.respawn();
 }
 

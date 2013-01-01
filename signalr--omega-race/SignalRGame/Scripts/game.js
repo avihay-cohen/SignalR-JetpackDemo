@@ -11,7 +11,6 @@ function startGame() {
 
     if (location.protocol == 'file:') {
         enchant.ENV.USE_WEBAUDIO = false;
-        console.log('1');
     }
 
     enchant.ENV.KEY_BIND_TABLE = {
@@ -34,9 +33,6 @@ function startGame() {
 
         game.addPlayer = function (name) {
             var character = new Character(name, true, game, stage, customMap.spawnpoint);
-            
-            stage.addChild(character.bear);
-            stage.addChild(character.nameLabel);
 
             stage.addEventListener('enterframe', function (e) {
                 // Scrolling
@@ -52,9 +48,6 @@ function startGame() {
 
         game.addOtherPlayer = function (name) {
             var character = new Character(name, false, game, stage, customMap.spawnpoint);
-            
-            stage.addChild(character.bear);
-            stage.addChild(character.nameLabel);
 
             return character;
         };
@@ -73,7 +66,7 @@ function startGame() {
 
         game.rootScene.on('abuttondown', function (evt) {
             var bullet = new Bullet(vm.currentPlayer().bear.x + 10, vm.currentPlayer().bear.y + 5);
-            stage.addChild(bullet.sprite);            
+            stage.addChild(bullet.sprite);
 
 
         });
@@ -93,6 +86,8 @@ function startGame() {
             stage = new Group();
 
             stage.addChild(map);
+
+            var bonus = new Bonus(200, 100);
 
             game.rootScene.addChild(stage);
             game.rootScene.backgroundColor = 'rgb(182, 255, 255)';

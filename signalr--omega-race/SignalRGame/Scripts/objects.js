@@ -29,3 +29,23 @@ function Bullet(x, y) {
        
     return this;
 }
+
+function Bonus(x,y) {
+    var self = this;
+    self.sprite = new Sprite(16, 16);
+    self.sprite.image = game.assets['../Images/icon0.png'];
+    self.sprite.x = x;
+    self.sprite.y = y;
+    self.sprite.frame = 30;
+    stage.addChild(self.sprite);
+
+    self.sprite.on('enterframe', function () {
+        if (vm.currentPlayer()) {
+            if (self.sprite.intersect(vm.currentPlayer().bear)) {
+                stage.removeChild(self.sprite);
+                vm.currentPlayer().increaseScore(50);
+            }
+        }
+
+    });
+} 

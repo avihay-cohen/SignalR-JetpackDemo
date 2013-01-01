@@ -66,7 +66,6 @@ $(document).ready(function () {
         }
     };
 
-    console.log(vm.characters());
     ko.applyBindings(vm);
 
     $.connection.hub.start();
