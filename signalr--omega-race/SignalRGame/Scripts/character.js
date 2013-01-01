@@ -151,20 +151,26 @@
         self.bear.y = data.Y;
     };
 
-    self.die = function() {
+    self.die = function () {
         self.game.assets['../Sounds/gameover.wav'].play();
+        self.score(self.score() - 10);
         self.bear.frame = 3;
-        self.bear.vy = -20;
-        self.game.stop(999, 'game over');
-        self.bear.removeEventListener('enterframe', arguments.callee);
+        // TODO BDM: Use timer here!
+        self.respawn();
     };
 
-    self.load = function (game, stage) {
+
+    self.respawn = function() {
+        self.bear.x = self.spawnpoint.x;
+        self.bear.y = -self.spawnpoint.y;
+    };
+
+    self.load = function (game, stage, spawnpoint) {
+        self.spawnpoint = spawnpoint;
         self.game = game;
         self.stage = stage;
         self.bear = new Sprite(32, 32);
-        self.bear.x = 8;
-        self.bear.y = -32;
+
         self.bear.vx = 0;
         self.bear.vy = 0;
         self.bear.ax = 0;
@@ -181,6 +187,8 @@
         }
 
         self.nameLabel = new Label(self.name);
+
+        self.respawn();
     };
 }
 

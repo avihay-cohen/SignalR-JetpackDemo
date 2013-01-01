@@ -28,7 +28,7 @@ function startGame() {
 
         game.addOtherPlayer = function (name) {
             var character = new Character(name, false);
-            character.load(game, stage);
+            character.load(game, stage, customMap.spawnpoint);
 
             stage.addChild(character.bear);
             stage.addChild(character.nameLabel);
@@ -60,7 +60,7 @@ function startGame() {
 
         game.addPlayer = function (name) {
             var character = new Character(name, true);
-            character.load(game, stage);
+            character.load(game, stage, customMap.spawnpoint);
 
             stage.addChild(character.bear);
             stage.addChild(character.nameLabel);
