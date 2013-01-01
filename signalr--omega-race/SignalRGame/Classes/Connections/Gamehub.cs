@@ -47,9 +47,16 @@ namespace SignalRGame.Classes.Connections
 
         public void clientCharacterStatus(string playerName, int x, int y)
         {
-            var ship = Game.GetShipByName(playerName);
-            ship.X = x;
-            ship.Y = y;
+            try
+            {
+                var ship = Game.GetShipByName(playerName);
+                ship.X = x;
+                ship.Y = y;
+            }
+            catch (Exception e)
+            {
+                
+            }
         }
 
         /// <summary>
