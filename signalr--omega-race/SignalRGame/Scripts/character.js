@@ -130,6 +130,10 @@
 
         if (self.bear.y > 320) { self.die(); }
 
+        if (self.inControl) {
+            self.update2();
+        }
+
         if ($.connection.gamehub) {
             $.connection.gamehub.clientCharacterStatus(self.name, self.bear.x, self.bear.y);
         }
@@ -171,7 +175,6 @@
 
         if(self.inControl) {
             self.bear.addEventListener('enterframe', self.update);
-            self.bear.addEventListener('enterframe', self.update2);
         } else {
             self.bear.addEventListener('enterframe', self.update2);
         }
