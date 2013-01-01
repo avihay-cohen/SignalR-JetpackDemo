@@ -80,7 +80,6 @@
     <Content Include="Scripts\game.js" />
     <Content Include="Scripts\lib\enchant.min.js" />
     <Content Include="Scripts\lib\knockout-2.2.0.js" />
-    <Content Include="Scripts\lib\easeljs-0.4.2.min.js" />
     <Content Include="Scripts\lib\jquery-1.7.2-vsdoc.js" />
     <Content Include="Scripts\lib\jquery-1.7.2.js" />
     <Content Include="Scripts\lib\jquery-1.7.2.min.js" />
@@ -88,7 +87,6 @@
     <Content Include="Scripts\lib\jquery.signalR-0.5.0.min.js" />
     <Content Include="Scripts\lib\json2.js" />
     <Content Include="Scripts\lib\json2.min.js" />
-    <Content Include="Scripts\lib\preloadjs-0.1.0.min.js" />
     <Content Include="Scripts\map.js" />
     <Content Include="Sounds\gameover.wav" />
     <Content Include="Sounds\jump.wav" />
