@@ -25,7 +25,7 @@
                     <a class="brand" href="#">Sandbox</a>
                     <div class="nav-collapse collapse">
                         <ul class="nav">
-<%--                            <li class=""><a href="#">Test</a></li>
+<%--                        <li class=""><a href="#">Test</a></li>
                             <li class=""><a href="#">Test2</a></li>--%>
                         </ul>
                     </div>
@@ -41,7 +41,10 @@
                 <div id="player-container" class="well">
                     <h2>Players</h2>                    
                     <div data-bind="visible: offlineMode">Offline mode!</div>      
-                    <table class="table">
+                    <div data-bind="visible: !hasPlayers()">
+                        No players connected
+                    </div>
+                    <table class="table" data-bind="visible: hasPlayers">
                         <thead>
                             <tr>
                                 <th>Name</th>

@@ -15,6 +15,9 @@ $(document).ready(function () {
         self.editMode = ko.observable(false);
         self.isAdmin = ko.observable(true);
         self.logEntries = ko.observableArray(["Welcome!"]);
+        self.hasPlayers = ko.computed(function () {
+            return self.characters().length > 0;
+        });
         self.kickAll = function () {
             if (!self.isAdmin()) return;
             if (self.offlineMode()) return;
