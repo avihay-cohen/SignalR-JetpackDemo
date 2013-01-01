@@ -45,6 +45,11 @@ namespace SignalRGame.Classes.Connections
             Clients.newPlayer(ship);            
         }
 
+        public void KickAll()
+        {
+            Game.RemoveAllPlayers();
+        }
+
         public void clientCharacterStatus(string playerName, int x, int y)
         {
             try

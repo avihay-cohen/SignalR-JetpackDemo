@@ -90,5 +90,10 @@ namespace SignalRGame.Classes.GameElements
                 Thread.Sleep(30);   // Loop info (original): 1000ms/s | 30ms | "33 fps"
             }
         }
+
+        public static void RemoveAllPlayers()
+        {
+            _game._ships.Clear();
+        }
     }
 }

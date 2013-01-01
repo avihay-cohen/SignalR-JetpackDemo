@@ -38,6 +38,8 @@ function startGame() {
 
         // mouse event
         game.rootScene.on('touchstart', function (evt) {
+            if (!vm.editMode()) return;
+
             console.log('click at ' + evt.localX + ' , ' + evt.localY);
             console.log('scrolled (x) to ' + stage.x);
             var tileX = Math.floor((evt.localX - stage.x) / 16);        /* note that stage coords are inversed */

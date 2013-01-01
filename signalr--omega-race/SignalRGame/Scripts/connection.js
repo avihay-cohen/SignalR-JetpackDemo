@@ -10,6 +10,13 @@
         self.offlineMode = ko.observable(true);
         self.characters = ko.observableArray([]);
         self.currentPlayer = ko.observable();
+        self.editMode = ko.observable(false);
+        self.isAdmin = ko.observable(true);
+        self.kickAll = function () {
+            if (!self.isAdmin()) return;
+            if (self.offlineMode()) return;
+            $.connection.gamehub.kickAll();
+        };
         self.join = function () {
             vm.inGame(true);
             hub.newPlayerConnected(self.localPlayerName());
