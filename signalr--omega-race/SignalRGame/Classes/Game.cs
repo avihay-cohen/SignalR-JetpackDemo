@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -79,15 +80,22 @@ namespace SignalRGame.Classes.GameElements
         }
 
         public void Main()
-        {           
-            while (!_stop)
+        {
+            try
             {
-                foreach (var handler in _handlers)
+                while (!_stop)
                 {
-                    handler.Draw(_ships, _arena);
-                }
+                    foreach (var handler in _handlers)
+                    {
+                        handler.Draw(_ships, _arena);
+                    }
 
-                Thread.Sleep(30);   // Loop info (original): 1000ms/s | 30ms | "33 fps"
+                    Thread.Sleep(30);   // Loop info (original): 1000ms/s | 30ms | "33 fps"
+                }
+            }
+            catch (Exception e)
+            {
+                
             }
         }
 

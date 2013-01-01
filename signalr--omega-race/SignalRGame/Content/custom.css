@@ -53,3 +53,48 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#b5bdc8', end
 .footer-links li:first-child {
   padding-left: 0;
 }
+
+/* Sprites
+-------------------------------------------------- */
+
+.char {
+    width: 32px !important;
+    height: 32px !important;
+    padding: 0 !important;  
+}
+
+.char0
+{
+    background:url(../Images/chara1.gif) 0 0;
+}
+
+.char1
+{
+    background:url(../Images/chara1.gif) 0 32px;
+}
+
+.char2
+{
+    background:url(../Images/chara1.gif) 0 64px;
+}
+
+.team {
+    width: 16px !important;
+    height: 16px !important;
+    padding: 0 !important;      
+}
+
+.team0
+{
+    background:url(../Images/icon0.png) 0 64px;
+}
+
+.team1
+{
+    background: url(../Images/icon0.png) 16px 64px;
+}
+
+.team2
+{
+    background:url(../Images/icon0.png) 32px 64px;
+}

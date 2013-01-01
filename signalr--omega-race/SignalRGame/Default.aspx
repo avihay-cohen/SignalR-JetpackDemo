@@ -3,8 +3,8 @@
     <head>
         <meta name="viewport" content="width=device-width, user-scalable=no">
         <title>JetPack Demo</title>
-        <link href="Content/bootstrap.css" rel="stylesheet" type="text/css"></link>
-        <link href="Content/custom.css" rel="stylesheet" type="text/css"></link>
+        <link href="Content/bootstrap.css" rel="stylesheet" type="text/css" />
+        <link href="Content/custom.css" rel="stylesheet" type="text/css" />
         <script type="text/javascript" src="Scripts/lib/jquery-1.7.2.min.js"></script>
         <script type="text/javascript" src="Scripts/lib/json2.min.js"></script>
         <script type="text/javascript" src="Scripts/lib/jquery.signalR-0.5.0.min.js"></script>
@@ -104,8 +104,26 @@
             <h3 id="myModalLabel">Join game</h3>
           </div>
           <div class="modal-body">
-            <input type="text" data-bind="value: localPlayerName" />
-          </div>
+            <div>
+                Name: <input type="text" data-bind="value: localPlayerName" /><br />    
+            </div>
+            <div>
+                Character:                 
+                <ul class="nav nav-pills">
+                  <li class="active"><a href="#" class="char char0"></a></li>
+                  <li><a href="#" class="char char1"></a></li>
+                  <li><a href="#" class="char char2"></a></li>
+                </ul>
+            </div>
+            <div>
+                Team:
+                <ul class="nav nav-pills">
+                  <li class="active"><a href="#" class="team team0"></a></li>
+                  <li><a href="#" class="team team1"></a></li>
+                  <li><a href="#" class="team team2"></a></li>
+                </ul>
+            </div>
+            </div>
           <div class="modal-footer">
             <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
             <button class="btn btn-primary" data-dismiss="modal"  data-bind="click: join">Join</button>
