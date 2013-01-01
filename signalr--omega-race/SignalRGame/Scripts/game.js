@@ -26,6 +26,12 @@ function startGame() {
             return character;
         };
 
+        // mouse event
+        game.rootScene.on('touchstart', function (evt) {
+            console.log('click at ' + evt.localX + ' , ' + evt.localY);
+            
+        });
+
         game.addPlayer = function (name) {
             var character = new Character(name, true);
             character.load(game, stage);

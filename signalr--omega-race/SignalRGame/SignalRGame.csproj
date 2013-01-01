@@ -71,11 +71,8 @@
   <ItemGroup>
     <Content Include="Default.aspx" />
     <Content Include="Global.asax" />
-    <Content Include="Images\bg.png" />
     <Content Include="Images\chara1.gif" />
     <Content Include="Images\icon0.png" />
-    <Content Include="Images\jetpack.png" />
-    <Content Include="Images\jetpackRight.png" />
     <Content Include="Images\map2.gif" />
     <Content Include="Scripts\character.js" />
     <Content Include="Scripts\connection.js" />
@@ -90,10 +87,8 @@
     <Content Include="Scripts\lib\jquery.signalR-0.5.0.min.js" />
     <Content Include="Scripts\lib\json2.js" />
     <Content Include="Scripts\lib\json2.min.js" />
-    <Content Include="Scripts\old\main.js" />
     <Content Include="Scripts\lib\preloadjs-0.1.0.min.js" />
     <Content Include="Scripts\map.js" />
-    <Content Include="Scripts\old\ship.js" />
     <Content Include="Sounds\gameover.wav" />
     <Content Include="Sounds\jump.wav" />
     <Content Include="Web.config" />
