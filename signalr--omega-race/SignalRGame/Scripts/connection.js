@@ -11,6 +11,12 @@ $(document).ready(function () {
         self.inMenu = ko.computed(function () { return !self.inGame(); });
         self.offlineMode = ko.observable(true);
         self.characters = ko.observableArray([]);
+        self.sortFunction = function(left, right) {
+            return left.score() == right.score() ? 0 : (left.score() > right.score() ? -1 : 1);
+        };
+        self.sortedCharacters = ko.dependentObservable(function () {
+            return self.characters.slice().sort(self.sortFunction);
+        }, self);
         self.currentPlayer = ko.observable();
         self.editMode = ko.observable(false);
         self.isAdmin = ko.observable(true);
