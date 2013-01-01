@@ -21,7 +21,7 @@ function startGame() {
 
     window.onload = function () {
 
-        game = new Game(320, 320);
+        game = new Game(640, 320);
         game.fps = 30;
         game.scale = 1;
         game.preload('../Images/icon0.png', '../Images/chara1.gif', '../Images/map2.gif', '../Sounds/jump.wav', '../Sounds/gameover.wav');
