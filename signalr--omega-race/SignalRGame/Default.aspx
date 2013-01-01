@@ -54,7 +54,7 @@
                             </tr>
                         </thead>
                         <tbody data-bind="foreach: characters">
-                            <tr>
+                            <tr data-bind="css: { success: isLocal() == true }">
                                 <td data-bind="text: name"></td>
                                 <td data-bind="text: score"></td>
                                 <td>

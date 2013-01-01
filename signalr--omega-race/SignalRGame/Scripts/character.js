@@ -34,6 +34,10 @@
     self.bear.jumpBoost = 0;
     self.bear.image = game.assets['../Images/chara1.gif'];
 
+    self.isLocal = ko.computed(function () {
+        return self.nameFixed == vm.localPlayerName();
+    });
+
     self.nameLabel = new Label(self.name());
 
     stage.addChild(self.bear);
