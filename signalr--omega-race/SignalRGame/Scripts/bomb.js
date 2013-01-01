@@ -14,7 +14,7 @@ function Bullet(x, y) {
     self.sprite.image = game.assets['../Images/icon0.png'];
     self.sprite.x = x;
     self.sprite.y = y;
-    self.sprite.tl.moveBy(320, 0, 30);
-    self.sprite.frame = 63;
+    self.sprite.tl.moveBy(500, 0, 40);
+    self.sprite.frame = 62;
     return this;
 }
