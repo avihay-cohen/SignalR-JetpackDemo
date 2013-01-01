@@ -60,7 +60,7 @@
                                     </div>                        
                                 </td>
                                 <td>
-                                    <button type="button" class="btn btn-danger" data-bind="visible: isAdmin">Kick</button>
+                                    <button type="button" class="btn btn-danger" data-bind="visible: $root.isAdmin">Kick</button>
                                 </td>
                             </tr>                
                         </tbody>

@@ -1,4 +1,6 @@
-﻿$(document).ready(function () {
+﻿var vm;
+
+$(document).ready(function () {
 
     var hub = $.connection.gamehub;
 
@@ -18,13 +20,13 @@
             if (self.offlineMode()) return;
             $.connection.gamehub.kickAll();
         };
-        self.showJoin = function() {
+        self.showJoin = function () {
         };
         self.join = function () {
-            vm.inGame(true);
-            hub.newPlayerConnected(self.localPlayerName());
+            self.inGame(true);
             self.currentPlayer(game.addPlayer(self.localPlayerName()));
             self.characters.push(self.currentPlayer());
+            hub.newPlayerConnected(self.localPlayerName());
         };
         self.isThisPlayer = function (playerName) {
             return (playerName == self.localPlayerName());
@@ -32,8 +34,6 @@
     };
 
     vm = new ViewModelObj();
-
-    ko.applyBindings(vm);
 
     hub.newPlayer = function (data) { /* placeholder */ };
 
@@ -48,22 +48,23 @@
                 for (var clientIndex = 0; clientIndex < vm.characters().length; clientIndex++) {
                     var clientShip = vm.characters()[clientIndex];
 
-                    if (clientShip.name === serverShip.Name) {
+                    if (clientShip.nameFixed === serverShip.Name) {
                         clientShip.serverUpdate(serverShip);
                         foundPlayer = true;
                     }
                 }
 
                 if (foundPlayer === false) {
-                    console.log('not found (adding new): ' + serverShip.Name);
                     var newP = game.addOtherPlayer(serverShip.Name);
                     vm.characters.push(newP);
-                    console.log('Welcome, ' + serverShip.Name);
                 }
             }
 
         }
     };
+
+    console.log(vm.characters());
+    ko.applyBindings(vm);
 
     $.connection.hub.start();
 

@@ -1,3 +1,9 @@
+// Global vars
+var game;
+var customMap;
+var map;
+var stage;
+
 function startGame() {
     enchant();
 
@@ -26,10 +32,27 @@ function startGame() {
         game.scale = 1;
         game.preload('../Images/icon0.png', '../Images/chara1.gif', '../Images/map2.gif', '../Sounds/jump.wav', '../Sounds/gameover.wav');
 
-        game.addOtherPlayer = function (name) {
-            var character = new Character(name, false);
-            character.load(game, stage, customMap.spawnpoint);
+        game.addPlayer = function (name) {
+            var character = new Character(name, true, game, stage, customMap.spawnpoint);
+            
+            stage.addChild(character.bear);
+            stage.addChild(character.nameLabel);
 
+            stage.addEventListener('enterframe', function (e) {
+                // Scrolling
+                if (this.x > 64 - character.bear.x) {
+                    this.x = 64 - character.bear.x;
+                } else if (this.x < 64 - character.bear.x) {
+                    this.x = 64 - character.bear.x;
+                }
+            });
+
+            return character;
+        };
+
+        game.addOtherPlayer = function (name) {
+            var character = new Character(name, false, game, stage, customMap.spawnpoint);
+            
             stage.addChild(character.bear);
             stage.addChild(character.nameLabel);
 
@@ -58,25 +81,6 @@ function startGame() {
             stage.addChild(bullet.sprite);
         });
 
-        game.addPlayer = function (name) {
-            var character = new Character(name, true);
-            character.load(game, stage, customMap.spawnpoint);
-
-            stage.addChild(character.bear);
-            stage.addChild(character.nameLabel);
-
-            stage.addEventListener('enterframe', function (e) {
-                // Scrolling
-                if (this.x > 64 - character.bear.x) {
-                    this.x = 64 - character.bear.x;
-                } else if (this.x < 64 - character.bear.x) {
-                    this.x = 64 - character.bear.x;
-                }
-            });
-
-            return character;
-        };
-
         game.onload = function () {
 
             customMap = new CustomMap(16, 16);
@@ -89,14 +93,9 @@ function startGame() {
 
             game.rootScene.addChild(stage);
             game.rootScene.backgroundColor = 'rgb(182, 255, 255)';
-
-
-
         };
 
         game.start();
-
-
     };   
 }
 

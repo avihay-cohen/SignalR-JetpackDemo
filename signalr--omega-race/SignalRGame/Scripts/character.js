@@ -1,7 +1,8 @@
-﻿function Character(name, inControl) {
+﻿function Character(name, inControl, game, stage, spawnpoint) {
 
     var self = this;
-    self.name = name;
+    self.name = ko.observable(name);
+    self.nameFixed = name;
     self.score = ko.observable(0);
     self.inControl = inControl;
     self.skinIndex = 1;
@@ -17,6 +18,24 @@
         right: { get: function () { return this.x + this.width; } },
         bottom: { get: function () { return this.y + this.height; } }
     });
+
+
+    self.spawnpoint = spawnpoint;
+    self.game = game;
+    self.stage = stage;
+    self.bear = new Sprite(32, 32);
+
+    self.bear.vx = 0;
+    self.bear.vy = 0;
+    self.bear.ax = 0;
+    self.bear.ay = 0;
+    self.bear.pose = 0;
+    self.bear.jumping = true;
+    self.bear.jumpBoost = 0;
+    self.bear.image = game.assets['../Images/chara1.gif'];
+
+
+
 
     self.relativeFrame = function (frame) {
         return frame + (self.skinIndex * 5);
@@ -146,7 +165,7 @@
         }
 
         if ($.connection.gamehub) {
-            $.connection.gamehub.clientCharacterStatus(self.name, self.bear.x, self.bear.y);
+            $.connection.gamehub.clientCharacterStatus(self.nameFixed, self.bear.x, self.bear.y);
         }
     };
 
@@ -177,31 +196,15 @@
         self.bear.y = -self.spawnpoint.y;
     };
 
-    self.load = function (game, stage, spawnpoint) {
-        self.spawnpoint = spawnpoint;
-        self.game = game;
-        self.stage = stage;
-        self.bear = new Sprite(32, 32);
+    if (self.inControl) {
+        self.bear.addEventListener('enterframe', self.update);
+    } else {
+        self.bear.addEventListener('enterframe', self.update2);
+    }
 
-        self.bear.vx = 0;
-        self.bear.vy = 0;
-        self.bear.ax = 0;
-        self.bear.ay = 0;
-        self.bear.pose = 0;
-        self.bear.jumping = true;
-        self.bear.jumpBoost = 0;
-        self.bear.image = game.assets['../Images/chara1.gif'];
+    self.nameLabel = new Label(self.name());
 
-        if (self.inControl) {
-            self.bear.addEventListener('enterframe', self.update);
-        } else {
-            self.bear.addEventListener('enterframe', self.update2);
-        }
-
-        self.nameLabel = new Label(self.name);
-
-        self.respawn();
-    };
+    self.respawn();
 }
 
 
