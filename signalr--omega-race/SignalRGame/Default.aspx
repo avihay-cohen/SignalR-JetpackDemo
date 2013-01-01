@@ -50,7 +50,7 @@
                                 <th>Name</th>
                                 <th>Score</th>
                                 <th>Health</th>
-                                <th>Action</th>
+                                <%--<th>Action</th>--%>
                             </tr>
                         </thead>
                         <tbody data-bind="foreach: sortedCharacters">
@@ -62,14 +62,14 @@
                                         <div class="bar" data-bind="style: { width: health() + '%' }"></div>
                                     </div>                        
                                 </td>
-                                <td>
+                                <%--<td>
                                     <button type="button" class="btn btn-danger" data-bind="visible: $root.isAdmin">Kick</button>
-                                </td>
+                                </td>--%>
                             </tr>                
                         </tbody>
                     </table>                           
                     <a href="#myModal" role="button" class="btn btn-success" data-bind="visible: inMenu" data-toggle="modal">Join game</a>                    
-                    <button type="button" class="btn btn-danger" data-bind="visible: isAdmin, click: kickAll">Kick all</button>                        
+                    <%--<button type="button" class="btn btn-danger" data-bind="visible: isAdmin, click: kickAll">Kick all</button>                        --%>
                 </div>
                     
                 <div id="game-console" class="well">
