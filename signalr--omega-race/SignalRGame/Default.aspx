@@ -3,12 +3,14 @@
     <head>
         <meta name="viewport" content="width=device-width, user-scalable=no">
         <title>JetPack Demo</title>
+        <link href="Content/bootstrap.min.css" rel="stylesheet" type="text/css"></link>
         <script type="text/javascript" src="Scripts/lib/jquery-1.7.2.min.js"></script>
         <script type="text/javascript" src="Scripts/lib/json2.min.js"></script>
         <script type="text/javascript" src="Scripts/lib/jquery.signalR-0.5.0.min.js"></script>
         <script src='<%= ResolveClientUrl("~/signalr/hubs") %>' type="text/javascript"></script>
         <script type="text/javascript" src="Scripts/lib/enchant.min.js"></script>
         <script type="text/javascript" src="Scripts/lib/knockout-2.2.0.js"></script>
+        <script type="text/javascript" src="Scripts/lib/bootstrap.min.js"></script>
         
         <style type="text/css">
          body {
@@ -38,7 +40,7 @@
                     <td data-bind="text: name"></td>
                 </tr>                
             </tbody>
-        </table>
+        </table>        
         <script type="text/javascript" src="Scripts/connection.js"></script>
         <script type="text/javascript" src="Scripts/map.js"></script>
         <script type="text/javascript" src="Scripts/character.js"></script>
