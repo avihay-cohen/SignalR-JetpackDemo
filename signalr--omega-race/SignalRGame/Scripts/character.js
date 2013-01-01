@@ -2,8 +2,9 @@
 
     var self = this;
     self.name = name;
-    self.score = ko.observable(0);    
+    self.score = ko.observable(0);
     self.inControl = inControl;
+    self.skinIndex = 1;
 
     self.Rectangle = enchant.Class.create({
         initialize: function (x, y, width, height) {
@@ -15,6 +16,14 @@
         right: { get: function () { return this.x + this.width; } },
         bottom: { get: function () { return this.y + this.height; } }
     });
+
+    self.relativeFrame = function (frame) {
+        return frame + (self.skinIndex * 5);
+    };
+
+    self.absoluteFrame = function (frame) {
+        return frame - (self.skinIndex * 5);
+    };
 
     self.jump = function() {
         self.bear.jumpBoost = 5;
@@ -53,13 +62,13 @@
         if (self.bear.ax > 0) self.bear.scaleX = 1;
         if (self.bear.ax < 0) self.bear.scaleX = -1;
         if (self.bear.ax != 0) {
-            if (self.game.frame % 3 == 0) {
+            if (self.absoluteFrame(self.game.frame) % 3 == 0) {
                 self.bear.pose++;
                 self.bear.pose %= 2;
             }
-            self.bear.frame = self.bear.pose + 1;
+            self.bear.frame = self.relativeFrame(self.bear.pose + 1);
         } else {
-            self.bear.frame = 0;
+            self.bear.frame = self.relativeFrame(0);
         }
         self.bear.vx += self.bear.ax + friction;
         self.bear.vy += self.bear.ay + 2; // 2 is gravity
@@ -151,10 +160,12 @@
         self.bear.y = data.Y;
     };
 
+
+
     self.die = function () {
         self.game.assets['../Sounds/gameover.wav'].play();
         self.score(self.score() - 10);
-        self.bear.frame = 3;
+        self.bear.frame = self.relativeFrame(3);
         // TODO BDM: Use timer here!
         self.respawn();
     };
