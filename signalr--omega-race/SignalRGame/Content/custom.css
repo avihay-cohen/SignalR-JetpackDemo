@@ -21,7 +21,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#b5bdc8', end
 }
 
 #sidebar-right {
-
+    width: 350px;
     margin: 40px;
     margin-top: 80px;
 }

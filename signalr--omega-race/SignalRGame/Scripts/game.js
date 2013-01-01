@@ -87,7 +87,8 @@ function startGame() {
 
             stage.addChild(map);
 
-            var bonus = new Bonus(200, 100);
+            // Disabled for now
+            //var bonus = new Bonus(200, 100);
 
             game.rootScene.addChild(stage);
             game.rootScene.backgroundColor = 'rgb(182, 255, 255)';

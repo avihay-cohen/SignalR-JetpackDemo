@@ -6,7 +6,9 @@ $(document).ready(function () {
 
     var ViewModelObj = function () {
         var self = this;
-        self.localPlayerName = ko.observable('anonymous');
+
+        var nameSuggestions = ['Brutus', 'Sniper', 'Destroyer', 'Razorblade'];        
+        self.localPlayerName = ko.observable(nameSuggestions[Math.floor(Math.random() * nameSuggestions.length)]);
         self.inGame = ko.observable(false);
         self.inMenu = ko.computed(function () { return !self.inGame(); });
         self.offlineMode = ko.observable(true);
