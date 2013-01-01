@@ -16,12 +16,14 @@ function startGame() {
         game.scale = 1;
         game.preload('../Images/chara1.gif', '../Images/map2.gif', '../Sounds/jump.wav', '../Sounds/gameover.wav');
 
-        game.addOtherPlayer = function(name) {
+        game.addOtherPlayer = function (name) {
             var character = new Character(name, false);
             character.load(game, stage);
 
             stage.addChild(character.bear);
-            stage.addChild(character.nameLabel);           
+            stage.addChild(character.nameLabel);
+
+            return character;
         };
 
         game.addPlayer = function (name) {
@@ -39,6 +41,8 @@ function startGame() {
                     this.x = 64 - character.bear.x;
                 }
             });
+
+            return character;
         };
 
         game.onload = function () {

@@ -51,8 +51,6 @@ namespace SignalRGame.Classes.GameElements
             get { return _arena; }
         }
 
-
-
         private Game()
         {
             _stop = false;
@@ -81,45 +79,16 @@ namespace SignalRGame.Classes.GameElements
         }
 
         public void Main()
-        {
-            // Loop info:
-
-            /*
-             1000ms/s
-            30ms
-
-            => "33 fps"
-             
-             */
-
-            int skipper = 0;
+        {           
             while (!_stop)
             {
-                foreach (var ship in _ships)
+                foreach (var handler in _handlers)
                 {
-                    MoveShip(ship);
+                    handler.Draw(_ships, _arena);
                 }
-                
-                if (skipper > 0)
-                {
-                    // Draw!
-                    foreach( var handler in _handlers)
-                    {
-                        handler.Draw(_ships, _arena);  
-                    }
-                    skipper = 0;
-                }
-                skipper++;
 
-                Thread.Sleep(30);   // original :30
+                Thread.Sleep(30);   // Loop info (original): 1000ms/s | 30ms | "33 fps"
             }
         }
-
-        private void MoveShip(Ship ship)
-        {
-            ship.Move();
-        }
-
-
     }
 }

@@ -141,6 +141,11 @@
         self.nameLabel.y = self.bear.y - 20;
     };
 
+    self.serverUpdate = function (data) {
+        self.bear.x = data.X;
+        self.bear.y = data.Y;
+    };
+
     self.die = function() {
         self.game.assets['../Sounds/gameover.wav'].play();
         self.bear.frame = 3;
