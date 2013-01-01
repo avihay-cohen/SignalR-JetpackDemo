@@ -5,22 +5,23 @@
     var ViewModelObj = function () {
         var self = this;
         self.localPlayerName = ko.observable('anonymous');
-        self.join = function () {
-            vm.inGame(true);
-            hub.newPlayerConnected(self.localPlayerName());
-            var newP = game.addPlayer(self.localPlayerName());
-            self.characters().push(newP);
-        };
-        self.isThisPlayer = function (playerName) {
-            return (playerName == self.localPlayerName());
-        };
         self.inGame = ko.observable(false);
         self.inMenu = ko.computed(function () { return !self.inGame(); });
         self.offlineMode = ko.observable(true);
         self.characters = ko.observableArray();
+        self.currentPlayer = ko.observable();
+        self.join = function () {
+            vm.inGame(true);
+            hub.newPlayerConnected(self.localPlayerName());
+            self.currentPlayer(game.addPlayer(self.localPlayerName()));
+            self.characters().push(self.currentPlayer());
+        };
+        self.isThisPlayer = function (playerName) {
+            return (playerName == self.localPlayerName());
+        };
     };
 
-    var vm = new ViewModelObj();
+    vm = new ViewModelObj();
 
     ko.applyBindings(vm);
 
@@ -43,11 +44,11 @@
                     }
                 }
 
-                if(foundPlayer === false) {
+                if (foundPlayer === false) {
                     console.log('not found (adding new): ' + serverShip.Name);
                     var newP = game.addOtherPlayer(serverShip.Name);
                     vm.characters().push(newP);
-                    console.log('Welcome, ' + serverShip.Name);                    
+                    console.log('Welcome, ' + serverShip.Name);
                 }
             }
 

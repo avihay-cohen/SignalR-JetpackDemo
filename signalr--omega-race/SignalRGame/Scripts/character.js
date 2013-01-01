@@ -158,8 +158,6 @@
         self.bear.removeEventListener('enterframe', arguments.callee);
     };
 
-
-
     self.load = function (game, stage) {
         self.game = game;
         self.stage = stage;

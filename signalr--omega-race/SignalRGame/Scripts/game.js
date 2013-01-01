@@ -23,7 +23,7 @@ function startGame() {
         game = new Game(320, 320);
         game.fps = 30;
         game.scale = 1;
-        game.preload('../Images/chara1.gif', '../Images/map2.gif', '../Sounds/jump.wav', '../Sounds/gameover.wav');
+        game.preload('../Images/icon0.png', '../Images/chara1.gif', '../Images/map2.gif', '../Sounds/jump.wav', '../Sounds/gameover.wav');
 
         game.addOtherPlayer = function (name) {
             var character = new Character(name, false);
@@ -45,8 +45,9 @@ function startGame() {
 
         });
 
-        game.rootScene.on('abuttondown', function(evt) {
-            console.log('shoot');
+        game.rootScene.on('abuttondown', function (evt) {
+            var bomba = new Bomb(vm.currentPlayer().bear.x, vm.currentPlayer().bear.y);
+            stage.addChild(bomba.sprite);
         });
 
         game.addPlayer = function (name) {
@@ -74,12 +75,15 @@ function startGame() {
             customMap.load(game);
             map = customMap.map;
 
-            stage = new Group();            
+            stage = new Group();
 
             stage.addChild(map);
 
             game.rootScene.addChild(stage);
             game.rootScene.backgroundColor = 'rgb(182, 255, 255)';
+
+
+
         };
 
         game.start();

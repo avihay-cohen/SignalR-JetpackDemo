@@ -1,10 +1,9 @@
-﻿var Bomb = enchant.Class.create(enchant.Sprite, {
-    initialize: function () {
-        enchant.Sprite.call(this, 16, 16);
-        this.image = game.assets['icon0.png']; // set image
-        this.moveTo(16, 8);       // move to the position
-        this.tl.moveBy(320, 0, 30);        // set movement
-        this.frame = 25;                   // set image data
-        game.rootScene.addChild(this);     // add to canvas
-    }
-});
+﻿function Bomb(x, y) {
+    var self = this;
+    self.sprite = new Sprite(16, 16);
+    self.sprite.image = game.assets['../Images/icon0.png'];
+    self.sprite.x = x;
+    self.sprite.y = y;
+    self.sprite.frame = 25;
+    return this;    
+}
