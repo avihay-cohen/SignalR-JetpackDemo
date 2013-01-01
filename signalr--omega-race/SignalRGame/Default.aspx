@@ -39,8 +39,7 @@
             <div id="sidebar-right" class="pull-right">
                     
                 <div id="player-container" class="well">
-                    <h2>Players</h2>
-                    <div data-bind="visible: inMenu"><input type="text" data-bind="value: localPlayerName" /><a href="#" data-bind="click: join">Join The Arena!</a></div>
+                    <h2>Players</h2>                    
                     <div data-bind="visible: offlineMode">Offline mode!</div>      
                     <table class="table">
                         <thead>
@@ -65,7 +64,8 @@
                                 </td>
                             </tr>                
                         </tbody>
-                    </table>  
+                    </table>                           
+                    <a href="#myModal" role="button" class="btn btn-success" data-bind="visible: inMenu" data-toggle="modal">Join game</a>                    
                     <button type="button" class="btn btn-danger" data-bind="visible: isAdmin, click: kickAll">Kick all</button>                        
                 </div>
                     
@@ -96,7 +96,21 @@
               <li><a href="http://bramdemoor.wordpress.com/" target="_blank">My blog</a></li>
             </ul>
      </footer>
-
+      
+        <!-- Modal -->
+        <div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            <h3 id="myModalLabel">Join game</h3>
+          </div>
+          <div class="modal-body">
+            <input type="text" data-bind="value: localPlayerName" />
+          </div>
+          <div class="modal-footer">
+            <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
+            <button class="btn btn-primary" data-dismiss="modal"  data-bind="click: join">Join</button>
+          </div>
+        </div>     
      
         <script type="text/javascript" src="Scripts/connection.js"></script>
         <script type="text/javascript" src="Scripts/map.js"></script>

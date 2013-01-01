@@ -18,6 +18,8 @@
             if (self.offlineMode()) return;
             $.connection.gamehub.kickAll();
         };
+        self.showJoin = function() {
+        };
         self.join = function () {
             vm.inGame(true);
             hub.newPlayerConnected(self.localPlayerName());
