@@ -72,13 +72,16 @@ function startGame() {
         });
 
         game.rootScene.on('abuttondown', function (evt) {
-            var bomba = new Bomb(vm.currentPlayer().bear.x, vm.currentPlayer().bear.y);
-            stage.addChild(bomba.sprite);
+            var bullet = new Bullet(vm.currentPlayer().bear.x + 10, vm.currentPlayer().bear.y + 5);
+            stage.addChild(bullet.sprite);            
+
+
         });
 
         game.rootScene.on('bbuttondown', function (evt) {
-            var bullet = new Bullet(vm.currentPlayer().bear.x, vm.currentPlayer().bear.y);
-            stage.addChild(bullet.sprite);
+            // Bomb disabled for now
+            //var bomba = new Bomb(vm.currentPlayer().bear.x, vm.currentPlayer().bear.y);
+            //stage.addChild(bomba.sprite);
         });
 
         game.onload = function () {

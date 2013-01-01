@@ -23,12 +23,12 @@
                     <span class="icon-bar"></span>
                     </button>
                     <a class="brand" href="#">Sandbox</a>
-                  <%--  <div class="nav-collapse collapse">
+                    <div class="nav-collapse collapse">
                         <ul class="nav">
-                            <li class=""><a href="#">Test</a></li>
-                            <li class=""><a href="#">Test2</a></li>
+<%--                            <li class=""><a href="#">Test</a></li>
+                            <li class=""><a href="#">Test2</a></li>--%>
                         </ul>
-                    </div>--%>
+                    </div>
                 </div>
             </div>
         </div>
@@ -77,11 +77,11 @@
                     >&nbsp;<input type="text"/>
                 </div>
                     
-                <div id="editor" class="well">
+<%--                <div id="editor" class="well">
                     <h2>Map</h2>
                     <input type="checkbox" data-bind="value: editMode" />Edit mode
                     <button class="btn btn-success">Save level</button>
-                </div>
+                </div>--%>
             </div>            
         </div>
         
@@ -115,14 +115,14 @@
                   <li><a href="#" class="char char2"></a></li>
                 </ul>
             </div>
-            <div>
+<%--            <div>
                 Team:
                 <ul class="nav nav-pills">
                   <li class="active"><a href="#" class="team team0"></a></li>
                   <li><a href="#" class="team team1"></a></li>
                   <li><a href="#" class="team team2"></a></li>
                 </ul>
-            </div>
+            </div>--%>
             </div>
           <div class="modal-footer">
             <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
