@@ -165,7 +165,8 @@
         self.bear.image = game.assets['../Images/chara1.gif'];
 
         if(self.inControl) {
-            self.bear.addEventListener('enterframe', self.update);   
+            self.bear.addEventListener('enterframe', self.update);
+            self.bear.addEventListener('enterframe', self.update2);
         } else {
             self.bear.addEventListener('enterframe', self.update2);
         }

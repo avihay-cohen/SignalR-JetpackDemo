@@ -14,6 +14,7 @@
         self.inGame = ko.observable(false);
         self.inMenu = ko.computed(function () { return !self.inGame(); });
         self.offlineMode = ko.observable(true);
+        self.remotePlayerNames = ko.observableArray();
     };
 
     var vm = new ViewModelObj();
@@ -26,13 +27,31 @@
             vm.inGame(true);
             game.addPlayer(playerName);
         } else {
-            game.addOtherPlayer(playerName);
+            //game.addOtherPlayer(playerName);
         }
         console.log('Welcome, ' + playerName);
     };
 
     hub.clientUpdateGameState = function (data) {
-        console.log('update from server received!');
+        // Sync ships from server with ships on client
+        for (var i = 0; i < data.Ships.length; i++) {
+            var serverShip = data.Ships[i];
+            if (vm.localPlayerName() != serverShip.Name) {
+
+                if (vm.remotePlayerNames.indexOf(serverShip.Name) == -1) {
+                    console.log('not found (adding new): ' + serverShip.Name);
+                    game.addOtherPlayer(serverShip.Name);
+                    vm.remotePlayerNames().push(serverShip.Name);
+                } else {
+                    var theCharacter = vm.remotePlayerNames()[vm.remotePlayerNames.indexOf(serverShip.Name)];
+                    console.log('updating ' + serverShip.Name);
+                }
+
+
+
+            }
+
+        }
     };
 
     $.connection.hub.start();

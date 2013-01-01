@@ -58,9 +58,9 @@ namespace SignalRGame.Classes.Connections
         public void Draw(List<Ship> ships, Arena arena)
         {
             DateTime now = DateTime.Now;
-            Clients.clientUpdateGameState();
+            //Clients.clientUpdateGameState();
             //     Debug.WriteLine(now.ToString() + "-" + now.Millisecond + ": " + "draw!");
-            //     Clients.draw(new DrawInfo { Ships = ships.ToArray(), Arena = arena });            
+            Clients.clientUpdateGameState(new DrawInfo { Ships = ships.ToArray(), Arena = arena });            
         }
 
 
