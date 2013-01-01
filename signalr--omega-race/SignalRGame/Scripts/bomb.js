@@ -17,7 +17,6 @@ function Bullet(x, y) {
     self.sprite.tl.moveBy(500, 0, 40);
     self.sprite.frame = 62;
     self.destroy = function () {
-        console.log('hit!');
         stage.removeChild(self.sprite);
         self.sprite.removeEventListener('enterframe', arguments.callee);
     };

@@ -27,6 +27,18 @@
         <br /><br />
         <div data-bind="visible: inMenu"><input type="text" data-bind="value: localPlayerName" /><a href="#" data-bind="click: join">Join The Arena!</a></div>
         <div data-bind="visible: offlineMode">Offline mode!</div>      
+        <table>
+            <thead>
+                <tr>
+                    <th>Name</th>
+                </tr>
+            </thead>
+            <tbody data-bind="foreach: characters">
+                <tr>
+                    <td data-bind="text: name"></td>
+                </tr>                
+            </tbody>
+        </table>
         <script type="text/javascript" src="Scripts/connection.js"></script>
         <script type="text/javascript" src="Scripts/map.js"></script>
         <script type="text/javascript" src="Scripts/character.js"></script>

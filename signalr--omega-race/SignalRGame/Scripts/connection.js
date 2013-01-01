@@ -8,13 +8,13 @@
         self.inGame = ko.observable(false);
         self.inMenu = ko.computed(function () { return !self.inGame(); });
         self.offlineMode = ko.observable(true);
-        self.characters = ko.observableArray();
+        self.characters = ko.observableArray([]);
         self.currentPlayer = ko.observable();
         self.join = function () {
             vm.inGame(true);
             hub.newPlayerConnected(self.localPlayerName());
             self.currentPlayer(game.addPlayer(self.localPlayerName()));
-            self.characters().push(self.currentPlayer());
+            self.characters.push(self.currentPlayer());
         };
         self.isThisPlayer = function (playerName) {
             return (playerName == self.localPlayerName());
@@ -47,7 +47,7 @@
                 if (foundPlayer === false) {
                     console.log('not found (adding new): ' + serverShip.Name);
                     var newP = game.addOtherPlayer(serverShip.Name);
-                    vm.characters().push(newP);
+                    vm.characters.push(newP);
                     console.log('Welcome, ' + serverShip.Name);
                 }
             }
