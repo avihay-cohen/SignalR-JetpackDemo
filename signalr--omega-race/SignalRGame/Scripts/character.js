@@ -2,6 +2,7 @@
 
     var self = this;
     self.name = name;
+    self.score = ko.observable(0);    
     self.inControl = inControl;
 
     self.Rectangle = enchant.Class.create({
