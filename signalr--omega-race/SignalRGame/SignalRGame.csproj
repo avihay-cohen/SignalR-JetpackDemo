@@ -74,6 +74,7 @@
     <Content Include="Images\chara1.gif" />
     <Content Include="Images\icon0.png" />
     <Content Include="Images\map2.gif" />
+    <Content Include="Scripts\bomb.js" />
     <Content Include="Scripts\character.js" />
     <Content Include="Scripts\connection.js" />
     <Content Include="Scripts\game.js" />

@@ -3,11 +3,20 @@ function startGame() {
 
     enchant.Sound.enabledInMobileSafari = true;
 
-    // Important check!!!!
     if (location.protocol == 'file:') {
         enchant.ENV.USE_WEBAUDIO = false;
         console.log('1');
     }
+
+    enchant.ENV.KEY_BIND_TABLE = {
+        37: 'left',
+        38: 'up',
+        39: 'right',
+        40: 'down',
+        32: 'a' // SPACE
+    };
+
+    enchant.ENV.PREVENT_DEFAULT_KEY_CODES = [37, 38, 39, 40, 32];
 
     window.onload = function () {
 
@@ -36,6 +45,10 @@ function startGame() {
 
         });
 
+        game.rootScene.on('abuttondown', function(evt) {
+            console.log('shoot');
+        });
+
         game.addPlayer = function (name) {
             var character = new Character(name, true);
             character.load(game, stage);
@@ -61,7 +74,7 @@ function startGame() {
             customMap.load(game);
             map = customMap.map;
 
-            stage = new Group();
+            stage = new Group();            
 
             stage.addChild(map);
 

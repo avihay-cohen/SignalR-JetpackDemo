@@ -158,6 +158,8 @@
         self.bear.removeEventListener('enterframe', arguments.callee);
     };
 
+
+
     self.load = function (game, stage) {
         self.game = game;
         self.stage = stage;
@@ -173,14 +175,12 @@
         self.bear.jumpBoost = 0;
         self.bear.image = game.assets['../Images/chara1.gif'];
 
-        if(self.inControl) {
+        if (self.inControl) {
             self.bear.addEventListener('enterframe', self.update);
         } else {
             self.bear.addEventListener('enterframe', self.update2);
         }
 
-        
-        
         self.nameLabel = new Label(self.name);
     };
 }
