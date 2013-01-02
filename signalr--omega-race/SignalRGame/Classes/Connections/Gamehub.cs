@@ -8,15 +8,20 @@ namespace SignalRGame.Classes.Connections
 {
     public class Gamehub : Hub, IDisconnect, IConnected
     {
+        #region Connection events
+
         public Task Connect()
         {
-            Game.AddGameHandler(this);
+            Game.Instance.AddHandler(this);
 
             return Clients.joined(Context.ConnectionId, DateTime.Now.ToString());
         }
 
         public Task Disconnect()
         {
+            Game.Instance.RemoveHandler(this);
+            Game.Instance.RemoveShip(Context.ConnectionId);
+
             return Clients.leave(Context.ConnectionId, DateTime.Now.ToString());
         }
 
@@ -25,40 +30,46 @@ namespace SignalRGame.Classes.Connections
             return Clients.rejoined(Context.ConnectionId, DateTime.Now.ToString());
         }
 
+        #endregion
+
+
+
+        #region Called by client
+
         /// <summary>
         /// Happens when an actual ship is spawned
         /// </summary>
         public void NewPlayerConnected(string playerName)
         {
-            var ship = new Ship { Name = playerName, X = 50, Y = 50 };
-            Game.AddGameShip(ship);
-         
+            var ship = new Ship {Name = playerName, X = 50, Y = 50};
+            ship.Id = Context.ConnectionId;
+            Game.Instance.AddShip(ship);
         }
 
         public void shot(string playerName, int x, int y, int dir)
-        {           
+        {
             Clients.bulletAdded(x, y, dir, playerName);
         }
 
         public void respawned(string playerName)
         {
-            var ship = Game.GetShipByName(playerName);
+            var ship = Game.Instance.GetShip(playerName);
             if (ship == null) return;
 
-            ship.Health = 100;           
+            ship.Health = 100;
         }
 
         public void hit(string playerName)
         {
-            var ship = Game.GetShipByName(playerName);
-            if(ship == null) return;
+            var ship = Game.Instance.GetShip(playerName);
+            if (ship == null) return;
 
-            ship.Health -= 20;          
+            ship.Health -= 20;
         }
 
         public void clientCharacterStatus(string playerName, int x, int y, int dir, int skin, int health, int score)
         {
-            var ship = Game.GetShipByName(playerName);
+            var ship = Game.Instance.GetShip(playerName);
 
             if (ship == null) return;
 
@@ -70,19 +81,13 @@ namespace SignalRGame.Classes.Connections
             ship.Score = score;
         }
 
-        /// <summary>
-        /// Called by game
-        /// </summary>        
-        public void Draw(List<Ship> ships, Arena arena)
+        #endregion
+
+    
+        public void Draw(List<Ship> ships)
         {
-            Clients.clientUpdateGameState(new DrawInfo { Ships = ships.ToArray(), Arena = arena });            
+            Clients.clientUpdateGameState(new { Ships = ships.ToArray() });            
         }
 
-    }
-
-    public class DrawInfo
-    {
-        public Ship[] Ships;
-        public Arena Arena;
     }
 }

@@ -106,7 +106,6 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Classes\Arena.cs" />
     <Compile Include="Classes\Connections\Gamehub.cs" />
     <Compile Include="Default.aspx.cs">
       <SubType>ASPXCodeBehind</SubType>

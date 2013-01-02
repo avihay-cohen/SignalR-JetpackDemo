@@ -10,6 +10,8 @@
         public int Health { get; set; }
         public int Score { get; set; }
 
+        public string Id { get; set; }
+
         public Ship()
         {
             Dir = 1;
