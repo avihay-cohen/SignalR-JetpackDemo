@@ -36,10 +36,11 @@ function startGame() {
 
             stage.addEventListener('enterframe', function (e) {
                 // Scrolling
-                if (this.x > 64 - character.bear.x) {
-                    this.x = 64 - character.bear.x;
-                } else if (this.x < 64 - character.bear.x) {
-                    this.x = 64 - character.bear.x;
+                var cut = 128;
+                if (this.x > cut - character.bear.x) {
+                    this.x = cut - character.bear.x;
+                } else if (this.x < cut - character.bear.x) {
+                    this.x = cut - character.bear.x;
                 }
             });
 
