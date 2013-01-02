@@ -1,4 +1,9 @@
-﻿var vm;
+﻿Array.prototype.remove = function(s) {
+    var i = this.indexOf(s);
+    if (i != -1) this.splice(i, 1);
+};
+
+var vm;
 
 $(document).ready(function () {
 

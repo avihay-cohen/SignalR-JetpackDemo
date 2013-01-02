@@ -34,6 +34,8 @@
     self.bear.jumpBoost = 0;
     self.bear.image = game.assets['../Images/chara1.gif'];
 
+    self.myBullets = [];
+
     self.isLocal = ko.computed(function () {
         return self.nameFixed == vm.localPlayerName();
     });
@@ -42,6 +44,20 @@
 
     stage.addChild(self.bear);
     stage.addChild(self.nameLabel);
+
+    self.shoot = function () {
+        var dir = self.bear.scaleX;
+        var x = self.bear.x + 10 + (25 * dir);
+        var y = self.bear.y + 10;
+        var bullet = new Bullet(x, y, dir, self);
+        stage.addChild(bullet.sprite);
+        self.myBullets.push(bullet);
+        console.log(self.myBullets.length);
+    };
+
+    self.removeBullet = function (b) {
+        self.myBullets.remove(b);
+    };
 
     self.doDamage = function (delta) {
         self.health(self.health() - delta);

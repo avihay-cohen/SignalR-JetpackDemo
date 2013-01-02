@@ -8,8 +8,9 @@
     return this;
 }
 
-function Bullet(x, y, dir) {
+function Bullet(x, y, dir, owner) {
     var self = this;
+    self.owner = owner;
     self.sprite = new Sprite(16, 16);
     self.sprite.image = game.assets['../Images/icon0.png'];
     self.sprite.x = x;
@@ -19,6 +20,7 @@ function Bullet(x, y, dir) {
     self.destroy = function () {
         stage.removeChild(self.sprite);
         self.sprite.removeEventListener('enterframe', arguments.callee);
+        owner.removeBullet(self);
     };
     self.update = function (evt) {
         if (map.hitTest(self.sprite.x + 30, self.sprite.y + 2)) {
