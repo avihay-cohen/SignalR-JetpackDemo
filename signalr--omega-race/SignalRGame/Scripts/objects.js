@@ -8,9 +8,8 @@
     return this;
 }
 
-function Bullet(x, y, dir, owner) {
+function Bullet(x, y, dir) {
     var self = this;
-    self.owner = owner;
     self.sprite = new Sprite(16, 16);
     self.sprite.image = game.assets['../Images/icon0.png'];
     self.sprite.x = x;
@@ -21,25 +20,29 @@ function Bullet(x, y, dir, owner) {
     self.destroy = function () {
         stage.removeChild(self.sprite);
         self.sprite.removeEventListener('enterframe', arguments.callee);
-        owner.removeBullet(self);
     };
     self.update = function (evt) {
         if (map.hitTest(self.sprite.x + 30, self.sprite.y + 2)) {
             self.destroy();
         }
     };
-    self.sprite.on('enterframe', function () {       
-        if (self.sprite.intersect(vm.currentPlayer().bear)) {
-            if ($.connection.gamehub) {
-                $.connection.gamehub.hit(vm.currentPlayer().nameFixed);
+    self.sprite.on('enterframe', function () {
+        if (vm.currentPlayer()) {
+            if (self.sprite.intersect(vm.currentPlayer().bear)) {
+                if ($.connection.gamehub) {
+                    vm.currentPlayer().hit();
+                    $.connection.gamehub.hit(vm.currentPlayer().nameFixed);
+                }
+                self.destroy();
             }
-            self.destroy();
-        }        
+        }
     });    
     
     self.sprite.tl.moveBy(500 * dir, 0, 40).then(function (e) { self.destroy(); });
     self.sprite.addEventListener('enterframe', self.update);
-       
+
+    stage.addChild(self.sprite);
+
     return this;
 }
 

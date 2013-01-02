@@ -68,7 +68,9 @@ function startGame() {
         });
 
         game.rootScene.on('abuttondown', function (evt) {
-            vm.currentPlayer().shoot();
+            if (vm.currentPlayer()) {
+                vm.currentPlayer().shoot();
+            }            
         });
 
         game.rootScene.on('bbuttondown', function (evt) {

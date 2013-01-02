@@ -71,7 +71,7 @@ namespace SignalRGame.Classes.GameElements
 
         private Ship GetShip(string name)
         {
-            return _ships.First(x => x.Name == name);
+            return _ships.FirstOrDefault(x => x.Name == name);
         }
 
         public void AddHandler(Gamehub handler)
@@ -103,5 +103,6 @@ namespace SignalRGame.Classes.GameElements
         {
             _game._ships.Clear();
         }
+
     }
 }

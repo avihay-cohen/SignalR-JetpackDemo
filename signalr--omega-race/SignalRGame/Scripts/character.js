@@ -11,6 +11,7 @@
     self.name = ko.observable(name);
     self.score = ko.observable(0);
     self.health = ko.observable(100);
+    self.healthFixed = 100;
     self.nameFixed = name;
     self.skinIndex = 0;
     self.isLocal = ko.observable(true);
@@ -31,24 +32,23 @@
     stage.addChild(self.bear);
     stage.addChild(self.nameLabel);
 
-    // Bullets
-    self.myBullets = [];
-
     self.shoot = function () {
         var dir = self.bear.scaleX;
         var x = self.bear.x + 10 + (25 * dir);
         var y = self.bear.y + 10;
-        var bullet = new Bullet(x, y, dir, self);
-        stage.addChild(bullet.sprite);
-        self.myBullets.push(bullet);
+        var bullet = new Bullet(x, y, dir);        
+        if ($.connection.gamehub) {
+            $.connection.gamehub.shot(self.nameFixed, x,y,dir);
+        }        
     };
 
     self.removeBullet = function (b) {
         self.myBullets.remove(b);
     };
 
-    self.setHealth = function (h) {
-        self.health(h);
+    self.hit = function () {
+        self.health(self.health(-20));
+        self.healthFixed -= 20;
         if (self.health() < 1) {
             self.die();
         }
@@ -194,7 +194,7 @@
         self.nameLabel.y = self.bear.y - 20;
 
         if ($.connection.gamehub) {
-            $.connection.gamehub.clientCharacterStatus(self.nameFixed, self.bear.x, self.bear.y, self.bear.scaleX, self.skinIndex);
+            $.connection.gamehub.clientCharacterStatus(self.nameFixed, self.bear.x, self.bear.y, self.bear.scaleX, self.skinIndex, self.healthFixed);
         }
     };
 

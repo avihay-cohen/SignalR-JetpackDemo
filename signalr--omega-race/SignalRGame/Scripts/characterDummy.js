@@ -7,10 +7,10 @@
     self.stage = stage;
 
     // General data
+    self.nameFixed = name;
     self.name = ko.observable(name);
     self.score = ko.observable(0);
-    self.health = ko.observable(100);    
-    self.nameFixed = name;
+    self.health = ko.observable(100);        
     self.skinIndex = 0;
     self.isLocal = ko.observable(false);
     

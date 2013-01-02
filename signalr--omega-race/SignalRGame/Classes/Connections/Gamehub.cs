@@ -32,56 +32,41 @@ namespace SignalRGame.Classes.Connections
         {
             var ship = new Ship { Name = playerName, X = 50, Y = 50 };
             Game.AddGameShip(ship);
-
-            // Not needed anymore
-            //Clients.newPlayer(ship);            
+         
         }
 
-        public void KickAll()
-        {
-            Game.RemoveAllPlayers();
+        public void shot(string playerName, int x, int y, int dir)
+        {           
+            Clients.bulletAdded(x, y, dir, playerName);
         }
 
         public void respawned(string playerName)
         {
-            try
-            {
-                var ship = Game.GetShipByName(playerName);
-                ship.Health = 100;
-            }
-            catch (Exception e)
-            {
+            var ship = Game.GetShipByName(playerName);
+            if (ship == null) return;
 
-            }               
+            ship.Health = 100;           
         }
 
         public void hit(string playerName)
         {
-            try
-            {
-                var ship = Game.GetShipByName(playerName);
-                ship.Health -= 20;
-            }
-            catch (Exception e)
-            {
+            var ship = Game.GetShipByName(playerName);
+            if(ship == null) return;
 
-            }            
+            ship.Health -= 20;          
         }
 
-        public void clientCharacterStatus(string playerName, int x, int y, int dir, int skin)
+        public void clientCharacterStatus(string playerName, int x, int y, int dir, int skin, int health)
         {
-            try
-            {
-                var ship = Game.GetShipByName(playerName);
-                ship.X = x;
-                ship.Y = y;
-                ship.Dir = dir;
-                ship.SkinIndex = skin;
-            }
-            catch (Exception e)
-            {
-                
-            }
+            var ship = Game.GetShipByName(playerName);
+
+            if (ship == null) return;
+
+            ship.X = x;
+            ship.Y = y;
+            ship.Dir = dir;
+            ship.SkinIndex = skin;
+            ship.Health = health;
         }
 
         /// <summary>
@@ -89,12 +74,8 @@ namespace SignalRGame.Classes.Connections
         /// </summary>        
         public void Draw(List<Ship> ships, Arena arena)
         {
-            DateTime now = DateTime.Now;
-            //Clients.clientUpdateGameState();
-            //     Debug.WriteLine(now.ToString() + "-" + now.Millisecond + ": " + "draw!");
             Clients.clientUpdateGameState(new DrawInfo { Ships = ships.ToArray(), Arena = arena });            
         }
-
 
     }
 

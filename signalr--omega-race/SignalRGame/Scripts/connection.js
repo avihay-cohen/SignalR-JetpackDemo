@@ -54,34 +54,48 @@ $(document).ready(function () {
         self.isThisPlayer = function (playerName) {
             return (playerName == self.localPlayerName());
         };
+
+        self.getCharacterToUpdate = function (serverCharacter) {
+            for (var clientIndex = 0; clientIndex < vm.characters().length; clientIndex++) {
+                var clientShip = vm.characters()[clientIndex];
+                if (clientShip.nameFixed === serverCharacter.Name) {
+                    return clientShip;
+                }
+            }
+
+            // If we got here, we need to add a new character
+            console.log('addin new');
+            var newlyAdded = new CharacterDummy(serverCharacter.Name, game, stage);
+            vm.characters.push(newlyAdded);
+            return newlyAdded;
+        };
     };
 
     vm = new ViewModelObj();
 
     hub.newPlayer = function (data) { };
 
+    hub.bulletAdded = function (x, y, dir, playerName) {
+        if (playerName != vm.localPlayerName()) {
+            var b = new Bullet(x, y, dir);
+        }
+    };
+
     hub.clientUpdateGameState = function (data) {
-        var clientData = vm.characters();
-
-        // Sync ships from server with ships on client
         for (var i = 0; i < data.Ships.length; i++) {
-            var existsOnClient = false;
 
-            for (var clientIndex = 0; clientIndex < clientData.length; clientIndex++) {
-                if (clientData[clientIndex].nameFixed === data.Ships[i].Name) {
+            var c = vm.getCharacterToUpdate(data.Ships[i]);
 
-                    existsOnClient = true;  // Found!
-
-                    if (clientData[clientIndex].nameFixed != vm.localPlayerName()) { // Ignore updates for local player!
-                        clientData[clientIndex].serverUpdate(data.Ships[i]);
-                    }
+            if (vm.currentPlayer()) {
+                // in the game
+                if (c.nameFixed != vm.localPlayerName()) { // Ignore updates for local player!
+                    c.serverUpdate(data.Ships[i]);
                 }
+            } else {
+                c.serverUpdate(data.Ships[i]);      // Spectator, always update
             }
 
-            if (existsOnClient === false) {
-                // Does not exist, need to add!
-                vm.characters.push(new CharacterDummy(data.Ships[i].Name, game, stage));
-            }
+
         }
     };
 
