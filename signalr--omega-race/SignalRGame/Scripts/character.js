@@ -145,10 +145,18 @@
                 boundary = Math.floor(dest.bottom / 16) * 16;
                 crossing = (dest.bottom - boundary) / dy * dx + dest.x;
                 if ((map.hitTest(crossing, boundary) && !map.hitTest(crossing, boundary - 16)) || (map.hitTest(crossing + dest.width, boundary) && !map.hitTest(crossing + dest.width, boundary - 16))) {
+
                     // player is standing on floor
                     self.bear.jumping = false;
                     self.bear.vy = 0;
                     dest.y = boundary - dest.height - 0.01;
+
+                    if (map.checkTile(crossing, boundary) == 10) {
+                        // Spikes!!!
+                        self.die();
+                        return;
+                    }
+
                     continue;
                 }
             } else if (dy < 0 && Math.floor(dest.y / 16) != Math.floor((dest.y - dy) / 16)) {
@@ -193,25 +201,27 @@
     };
 
     self.die = function () {
+        self.bear.removeEventListener('enterframe');
         self.game.assets['../Sounds/gameover.wav'].play();
-        self.increaseScore(-10);        
+        self.increaseScore(-10);
         self.bear.frame = self.relativeFrame(3);
+        vm.addToLog(self.nameFixed + ' legt het loodje!');
+
         // TODO BDM: Use timer here!
         self.respawn();
-        vm.addToLog(self.nameFixed + ' legt het loodje!');
     };
 
 
     self.respawn = function() {
         self.bear.x = self.spawnpoint.x;
         self.bear.y = -self.spawnpoint.y;
-    };
 
-    if (self.inControl) {
-        self.bear.addEventListener('enterframe', self.update);
-    } else {
-        self.bear.addEventListener('enterframe', self.update2);
-    }
+        if (self.inControl) {
+            self.bear.addEventListener('enterframe', self.update);
+        } else {
+            self.bear.addEventListener('enterframe', self.update2);
+        }
+    };
     
     self.respawn();
 }
