@@ -15,7 +15,6 @@ function Bullet(x, y, dir) {
     self.sprite.x = x;
     self.sprite.y = y;
     self.sprite.scaleX = -dir;
-    self.sprite.tl.moveBy(500 * dir, 0, 40);
     self.sprite.frame = 62;
     self.destroy = function () {
         stage.removeChild(self.sprite);
@@ -26,6 +25,7 @@ function Bullet(x, y, dir) {
             self.destroy();
         }
     };
+    self.sprite.tl.moveBy(500 * dir, 0, 40).then(function (e) { self.destroy(); });
     self.sprite.addEventListener('enterframe', self.update);
        
     return this;
