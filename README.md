@@ -10,5 +10,5 @@ Technologies used:
 - Twitter Bootstrap
 
 Preview screenshot:
-![aEarly preview screenshot](/meta/preview2.png "Early preview screenshot")
+![aEarly preview screenshot](https://raw.github.com/bramdemoor/SignalR-JetpackDemo/master/meta/preview2.png "Early preview screenshot")
 
