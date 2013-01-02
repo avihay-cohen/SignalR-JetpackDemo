@@ -25,6 +25,14 @@ function Bullet(x, y, dir) {
             self.destroy();
         }
     };
+    self.sprite.on('enterframe', function () {
+        if (vm && vm.currentPlayer()) {            
+            if (self.sprite.intersect(vm.currentPlayer().bear)) {
+                stage.removeChild(self.sprite);
+                vm.currentPlayer().doDamage(20);
+            }
+        }
+    });    
     self.sprite.tl.moveBy(500 * dir, 0, 40).then(function (e) { self.destroy(); });
     self.sprite.addEventListener('enterframe', self.update);
        
@@ -47,6 +55,5 @@ function Bonus(x,y) {
                 vm.currentPlayer().increaseScore(50);
             }
         }
-
     });
 } 

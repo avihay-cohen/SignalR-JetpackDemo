@@ -43,6 +43,13 @@
     stage.addChild(self.bear);
     stage.addChild(self.nameLabel);
 
+    self.doDamage = function (delta) {
+        self.health(self.health() - delta);
+        if (self.health() < 1) {
+            self.die();
+        }
+    };
+
     self.increaseScore = function(delta) {
         self.score(self.score() + delta);
     };
