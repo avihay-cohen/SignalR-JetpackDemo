@@ -136,6 +136,7 @@
         <script type="text/javascript" src="Scripts/connection.js"></script>
         <script type="text/javascript" src="Scripts/map.js"></script>
         <script type="text/javascript" src="Scripts/character.js"></script>
+        <script type="text/javascript" src="Scripts/characterDummy.js"></script>
         <script type="text/javascript" src="Scripts/objects.js"></script>
         <script type="text/javascript" src="Scripts/game.js"></script>
     </body>

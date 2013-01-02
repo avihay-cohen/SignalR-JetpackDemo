@@ -3,6 +3,7 @@ var game;
 var customMap;
 var map;
 var stage;
+var Rectangle;
 
 function startGame() {
     enchant();
@@ -26,31 +27,32 @@ function startGame() {
 
     window.onload = function () {
 
+        Rectangle = enchant.Class.create({
+            initialize: function (x, y, width, height) {
+                this.x = x;
+                this.y = y;
+                this.width = width;
+                this.height = height;
+            },
+            right: { get: function () { return this.x + this.width; } },
+            bottom: { get: function () { return this.y + this.height; } }
+        });
+
         game = new Game(640, 320);
         game.fps = 30;
         game.scale = 1;
         game.preload('../Images/icon0.png', '../Images/chara1.gif', '../Images/map2.gif', '../Sounds/jump.wav', '../Sounds/gameover.wav');
 
-        game.addPlayer = function (name) {
-            var character = new Character(name, true, game, stage, customMap.spawnpoint);
-
-            stage.addEventListener('enterframe', function (e) {
+        game.enableScrolling = function(bear) {
+            stage.addEventListener('enterframe', function(e) {
                 // Scrolling
                 var cut = 128;
-                if (this.x > cut - character.bear.x) {
-                    this.x = cut - character.bear.x;
-                } else if (this.x < cut - character.bear.x) {
-                    this.x = cut - character.bear.x;
+                if (this.x > cut - bear.x) {
+                    this.x = cut - bear.x;
+                } else if (this.x < cut - bear.x) {
+                    this.x = cut - bear.x;
                 }
             });
-
-            return character;
-        };
-
-        game.addOtherPlayer = function (name) {
-            var character = new Character(name, false, game, stage, customMap.spawnpoint);
-
-            return character;
         };
 
         // mouse event

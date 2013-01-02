@@ -8,8 +8,6 @@ namespace SignalRGame.Classes.Connections
 {
     public class Gamehub : Hub, IDisconnect, IConnected
     {
-        private readonly string[] _colours = new[] { "red", "white", "blue", "yellow" };
-
         public Task Connect()
         {
             Game.AddGameHandler(this);
@@ -32,22 +30,42 @@ namespace SignalRGame.Classes.Connections
         /// </summary>
         public void NewPlayerConnected(string playerName)
         {
-            int colourIndex = Game.NumberOfShips;
-            if (Game.NumberOfShips > _colours.Length - 1)
-            {
-                colourIndex = Game.NumberOfShips % _colours.Length;
-            }
-
-            var colour = _colours[colourIndex];
-            var ship = new Ship { Colour = colour, Name = playerName, X = 50, Y = 50 };
+            var ship = new Ship { Name = playerName, X = 50, Y = 50 };
             Game.AddGameShip(ship);
 
-            Clients.newPlayer(ship);            
+            // Not needed anymore
+            //Clients.newPlayer(ship);            
         }
 
         public void KickAll()
         {
             Game.RemoveAllPlayers();
+        }
+
+        public void respawned(string playerName)
+        {
+            try
+            {
+                var ship = Game.GetShipByName(playerName);
+                ship.Health = 100;
+            }
+            catch (Exception e)
+            {
+
+            }               
+        }
+
+        public void hit(string playerName)
+        {
+            try
+            {
+                var ship = Game.GetShipByName(playerName);
+                ship.Health -= 20;
+            }
+            catch (Exception e)
+            {
+
+            }            
         }
 
         public void clientCharacterStatus(string playerName, int x, int y, int dir, int skin)

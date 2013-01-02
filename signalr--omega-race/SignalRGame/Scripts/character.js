@@ -1,30 +1,23 @@
-﻿function Character(name, inControl, game, stage, spawnpoint) {
-
+﻿function PlayerCharacter(name, spawnpoint, game, stage) {
+    // Self
     var self = this;
-    self.name = ko.observable(name);
-    self.nameFixed = name;
-    self.score = ko.observable(0);
-    self.inControl = inControl;
-    self.skinIndex = 0;
-    self.health = ko.observable(100);
 
-    self.Rectangle = enchant.Class.create({
-        initialize: function (x, y, width, height) {
-            this.x = x;
-            this.y = y;
-            this.width = width;
-            this.height = height;
-        },
-        right: { get: function () { return this.x + this.width; } },
-        bottom: { get: function () { return this.y + this.height; } }
-    });
-
-
-    self.spawnpoint = spawnpoint;
+    // References
     self.game = game;
     self.stage = stage;
-    self.bear = new Sprite(32, 32);
 
+    // General data
+    self.spawnpoint = spawnpoint;
+    self.name = ko.observable(name);
+    self.score = ko.observable(0);
+    self.health = ko.observable(100);
+    self.nameFixed = name;
+    self.skinIndex = 0;
+    self.isLocal = ko.observable(true);
+
+    // Sprite
+    self.bear = new Sprite(32, 32);
+    self.bear.image = game.assets['../Images/chara1.gif'];
     self.bear.vx = 0;
     self.bear.vy = 0;
     self.bear.ax = 0;
@@ -32,18 +25,14 @@
     self.bear.pose = 0;
     self.bear.jumping = true;
     self.bear.jumpBoost = 0;
-    self.bear.image = game.assets['../Images/chara1.gif'];
-
-    self.myBullets = [];
-
-    self.isLocal = ko.computed(function () {
-        return self.nameFixed == vm.localPlayerName();
-    });
-
+    
+    // Label
     self.nameLabel = new Label(self.name());
-
     stage.addChild(self.bear);
     stage.addChild(self.nameLabel);
+
+    // Bullets
+    self.myBullets = [];
 
     self.shoot = function () {
         var dir = self.bear.scaleX;
@@ -52,15 +41,14 @@
         var bullet = new Bullet(x, y, dir, self);
         stage.addChild(bullet.sprite);
         self.myBullets.push(bullet);
-        console.log(self.myBullets.length);
     };
 
     self.removeBullet = function (b) {
         self.myBullets.remove(b);
     };
 
-    self.doDamage = function (delta) {
-        self.health(self.health() - delta);
+    self.setHealth = function (h) {
+        self.health(h);
         if (self.health() < 1) {
             self.die();
         }
@@ -128,7 +116,7 @@
         self.bear.vx = Math.min(Math.max(self.bear.vx, -10), 10);
         self.bear.vy = Math.min(Math.max(self.bear.vy, -10), 10);
 
-        var dest = new self.Rectangle(self.bear.x + self.bear.vx + 5, self.bear.y + self.bear.vy + 2, self.bear.width - 10, self.bear.height - 2);
+        var dest = new Rectangle(self.bear.x + self.bear.vx + 5, self.bear.y + self.bear.vy + 2, self.bear.width - 10, self.bear.height - 2);
 
         self.bear.jumping = true;
         if (dest.x < -self.stage.x) {
@@ -201,26 +189,13 @@
 
         if (self.bear.y > 320) { self.die(); }
 
-        if (self.inControl) {
-            self.update2();
-        }
+        // Move label
+        self.nameLabel.x = self.bear.x + 5;
+        self.nameLabel.y = self.bear.y - 20;
 
         if ($.connection.gamehub) {
             $.connection.gamehub.clientCharacterStatus(self.nameFixed, self.bear.x, self.bear.y, self.bear.scaleX, self.skinIndex);
         }
-    };
-
-    self.update2 = function() {
-        // Move label
-        self.nameLabel.x = self.bear.x + 5;
-        self.nameLabel.y = self.bear.y - 20;
-    };
-
-    self.serverUpdate = function (data) {
-        self.bear.x = data.X;
-        self.bear.y = data.Y;
-        self.bear.scaleX = data.Dir;
-        self.skinIndex = data.SkinIndex;
     };
 
     self.die = function () {
@@ -229,21 +204,20 @@
         self.increaseScore(-10);
         self.bear.frame = self.relativeFrame(3);
         vm.addToLog(self.nameFixed + ' legt het loodje!');
-
-        // TODO BDM: Use timer here!
         self.respawn();
     };
 
+    self.respawn = function () {
+        if ($.connection.gamehub) {
+            $.connection.gamehub.respawned(self.nameFixed);
+        }                   
 
-    self.respawn = function() {
+        self.health(100);
         self.bear.x = self.spawnpoint.x;
         self.bear.y = -self.spawnpoint.y;
+        self.bear.frame = self.relativeFrame(0);
 
-        if (self.inControl) {
-            self.bear.addEventListener('enterframe', self.update);
-        } else {
-            self.bear.addEventListener('enterframe', self.update2);
-        }
+        self.bear.addEventListener('enterframe', self.update);
     };
     
     self.respawn();

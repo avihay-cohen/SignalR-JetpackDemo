@@ -78,6 +78,7 @@
     <Content Include="Images\chara1.gif" />
     <Content Include="Images\icon0.png" />
     <Content Include="Images\map2.gif" />
+    <Content Include="Scripts\characterDummy.js" />
     <Content Include="Scripts\objects.js" />
     <Content Include="Scripts\lib\bootstrap.js" />
     <Content Include="Scripts\lib\bootstrap.min.js" />

@@ -17,6 +17,7 @@ function Bullet(x, y, dir, owner) {
     self.sprite.y = y;
     self.sprite.scaleX = -dir;
     self.sprite.frame = 62;
+
     self.destroy = function () {
         stage.removeChild(self.sprite);
         self.sprite.removeEventListener('enterframe', arguments.callee);
@@ -27,14 +28,15 @@ function Bullet(x, y, dir, owner) {
             self.destroy();
         }
     };
-    self.sprite.on('enterframe', function () {
-        if (vm && vm.currentPlayer()) {            
-            if (self.sprite.intersect(vm.currentPlayer().bear)) {
-                stage.removeChild(self.sprite);
-                vm.currentPlayer().doDamage(20);
+    self.sprite.on('enterframe', function () {       
+        if (self.sprite.intersect(vm.currentPlayer().bear)) {
+            if ($.connection.gamehub) {
+                $.connection.gamehub.hit(vm.currentPlayer().nameFixed);
             }
-        }
+            self.destroy();
+        }        
     });    
+    
     self.sprite.tl.moveBy(500 * dir, 0, 40).then(function (e) { self.destroy(); });
     self.sprite.addEventListener('enterframe', self.update);
        

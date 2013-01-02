@@ -12,7 +12,7 @@ $(document).ready(function () {
     var ViewModelObj = function () {
         var self = this;
 
-        var nameSuggestions = ['Brutus', 'Sniper', 'Destroyer', 'Razorblade'];        
+        var nameSuggestions = ['Brutus', 'Sniper', 'Destroyer', 'Razorblade'];
         self.localPlayerName = ko.observable(nameSuggestions[Math.floor(Math.random() * nameSuggestions.length)]);
         self.inGame = ko.observable(false);
         self.inMenu = ko.computed(function () { return !self.inGame(); });
@@ -36,8 +36,7 @@ $(document).ready(function () {
             if (self.offlineMode()) return;
             $.connection.gamehub.kickAll();
         };
-        self.showJoin = function () {
-        };
+        self.showJoin = function () { };
         self.addToLog = function (text) {
             if (self.logEntries().length > 4) {
                 self.logEntries.shift();
@@ -46,10 +45,11 @@ $(document).ready(function () {
             self.logEntries.push(text);
         };
         self.join = function () {
-            self.inGame(true);
-            self.currentPlayer(game.addPlayer(self.localPlayerName()));
+            self.currentPlayer(new PlayerCharacter(self.localPlayerName(), customMap.spawnpoint, game, stage));
+            game.enableScrolling(self.currentPlayer().bear);
             self.characters.push(self.currentPlayer());
             hub.newPlayerConnected(self.localPlayerName());
+            self.inGame(true);
         };
         self.isThisPlayer = function (playerName) {
             return (playerName == self.localPlayerName());
@@ -58,31 +58,30 @@ $(document).ready(function () {
 
     vm = new ViewModelObj();
 
-    hub.newPlayer = function (data) { /* placeholder */ };
+    hub.newPlayer = function (data) { };
 
     hub.clientUpdateGameState = function (data) {
+        var clientData = vm.characters();
+
         // Sync ships from server with ships on client
         for (var i = 0; i < data.Ships.length; i++) {
-            var serverShip = data.Ships[i];
-            if (vm.localPlayerName() != serverShip.Name) {      // Ignore updates for local player!
+            var existsOnClient = false;
 
-                var foundPlayer = false;
+            for (var clientIndex = 0; clientIndex < clientData.length; clientIndex++) {
+                if (clientData[clientIndex].nameFixed === data.Ships[i].Name) {
 
-                for (var clientIndex = 0; clientIndex < vm.characters().length; clientIndex++) {
-                    var clientShip = vm.characters()[clientIndex];
+                    existsOnClient = true;  // Found!
 
-                    if (clientShip.nameFixed === serverShip.Name) {
-                        clientShip.serverUpdate(serverShip);
-                        foundPlayer = true;
+                    if (clientData[clientIndex].nameFixed != vm.localPlayerName()) { // Ignore updates for local player!
+                        clientData[clientIndex].serverUpdate(data.Ships[i]);
                     }
-                }
-
-                if (foundPlayer === false) {
-                    var newP = game.addOtherPlayer(serverShip.Name);
-                    vm.characters.push(newP);
                 }
             }
 
+            if (existsOnClient === false) {
+                // Does not exist, need to add!
+                vm.characters.push(new CharacterDummy(data.Ships[i].Name, game, stage));
+            }
         }
     };
 
