@@ -56,8 +56,8 @@ function startGame() {
         game.rootScene.on('touchstart', function (evt) {
             if (!vm.editMode()) return;
 
-            console.log('click at ' + evt.localX + ' , ' + evt.localY);
-            console.log('scrolled (x) to ' + stage.x);
+            //            console.log('click at ' + evt.localX + ' , ' + evt.localY);
+            //            console.log('scrolled (x) to ' + stage.x);
             var tileX = Math.floor((evt.localX - stage.x) / 16);        /* note that stage coords are inversed */
             var tileY = Math.floor((evt.localY - stage.y) / 16);
             customMap.setTile(tileX, tileY);
@@ -65,10 +65,10 @@ function startGame() {
         });
 
         game.rootScene.on('abuttondown', function (evt) {
-            var bullet = new Bullet(vm.currentPlayer().bear.x + 10, vm.currentPlayer().bear.y + 5);
+            var x = vm.currentPlayer().bear.x + 10 + (25 * vm.currentPlayer().bear.scaleX);
+            var y = vm.currentPlayer().bear.y + 10;
+            var bullet = new Bullet(x, y);
             stage.addChild(bullet.sprite);
-
-
         });
 
         game.rootScene.on('bbuttondown', function (evt) {
