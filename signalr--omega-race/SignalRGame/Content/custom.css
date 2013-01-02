@@ -12,9 +12,12 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#b5bdc8', end
 
 }
 
-#enchant-stage {
-    width: 1280px;
-    height: 640px;
+#enchant-stage 
+{
+    width: 640px;
+    height: 320px;
+   /* width: 1280px;
+    height: 640px;*/
     margin: 40px;
     margin-top: 80px;
       background-color: #1B1B1B;

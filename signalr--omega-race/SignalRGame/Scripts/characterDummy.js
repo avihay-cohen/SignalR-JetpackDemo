@@ -30,6 +30,7 @@
         self.bear.scaleX = data.Dir;
         self.skinIndex = data.SkinIndex;
         self.health(data.Health);
+        self.score(data.Score);        
 
         // Move label
         self.nameLabel.x = self.bear.x + 5;

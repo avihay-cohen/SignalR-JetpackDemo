@@ -8,6 +8,7 @@
         public int SkinIndex { get; set; }
         public int Dir { get; set; }
         public int Health { get; set; }
+        public int Score { get; set; }
 
         public Ship()
         {

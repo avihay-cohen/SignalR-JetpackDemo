@@ -10,6 +10,7 @@
     self.spawnpoint = spawnpoint;
     self.name = ko.observable(name);
     self.score = ko.observable(0);
+    self.scoreFixed = 0;
     self.health = ko.observable(100);
     self.healthFixed = 100;
     self.nameFixed = name;
@@ -47,15 +48,16 @@
     };
 
     self.hit = function () {
-        self.health(self.health(-20));
+        self.health(self.health()-20);
         self.healthFixed -= 20;
         if (self.health() < 1) {
             self.die();
         }
     };
 
-    self.increaseScore = function(delta) {
+    self.increaseScore = function (delta) {
         self.score(self.score() + delta);
+        self.scoreFixed += delta;
     };
 
     self.relativeFrame = function (frame) {
@@ -194,7 +196,7 @@
         self.nameLabel.y = self.bear.y - 20;
 
         if ($.connection.gamehub) {
-            $.connection.gamehub.clientCharacterStatus(self.nameFixed, self.bear.x, self.bear.y, self.bear.scaleX, self.skinIndex, self.healthFixed);
+            $.connection.gamehub.clientCharacterStatus(self.nameFixed, self.bear.x, self.bear.y, self.bear.scaleX, self.skinIndex, self.healthFixed, self.scoreFixed);
         }
     };
 
@@ -210,8 +212,9 @@
     self.respawn = function () {
         if ($.connection.gamehub) {
             $.connection.gamehub.respawned(self.nameFixed);
-        }                   
+        }
 
+        self.healthFixed = 100;
         self.health(100);
         self.bear.x = self.spawnpoint.x;
         self.bear.y = -self.spawnpoint.y;

@@ -56,7 +56,7 @@ namespace SignalRGame.Classes.Connections
             ship.Health -= 20;          
         }
 
-        public void clientCharacterStatus(string playerName, int x, int y, int dir, int skin, int health)
+        public void clientCharacterStatus(string playerName, int x, int y, int dir, int skin, int health, int score)
         {
             var ship = Game.GetShipByName(playerName);
 
@@ -67,6 +67,7 @@ namespace SignalRGame.Classes.Connections
             ship.Dir = dir;
             ship.SkinIndex = skin;
             ship.Health = health;
+            ship.Score = score;
         }
 
         /// <summary>
