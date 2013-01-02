@@ -65,9 +65,10 @@ function startGame() {
         });
 
         game.rootScene.on('abuttondown', function (evt) {
-            var x = vm.currentPlayer().bear.x + 10 + (25 * vm.currentPlayer().bear.scaleX);
+            var dir = vm.currentPlayer().bear.scaleX;
+            var x = vm.currentPlayer().bear.x + 10 + (25 * dir);
             var y = vm.currentPlayer().bear.y + 10;
-            var bullet = new Bullet(x, y);
+            var bullet = new Bullet(x, y, dir);
             stage.addChild(bullet.sprite);
         });
 

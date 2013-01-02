@@ -8,13 +8,14 @@
     return this;
 }
 
-function Bullet(x, y) {
+function Bullet(x, y, dir) {
     var self = this;
     self.sprite = new Sprite(16, 16);
     self.sprite.image = game.assets['../Images/icon0.png'];
     self.sprite.x = x;
     self.sprite.y = y;
-    self.sprite.tl.moveBy(500, 0, 40);
+    self.sprite.scaleX = -dir;
+    self.sprite.tl.moveBy(500 * dir, 0, 40);
     self.sprite.frame = 62;
     self.destroy = function () {
         stage.removeChild(self.sprite);
