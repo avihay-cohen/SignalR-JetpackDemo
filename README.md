@@ -10,3 +10,5 @@ Technologies used:
 - Twitter Bootstrap
 
 Preview screenshot:
+![aEarly preview screenshot](meta/preview2.png "Early preview screenshot")
+
